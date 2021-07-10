@@ -2,33 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/posts/opcoming/</loc>
+    <loc>tersetears.github.io/posts/opcoming/</loc>
   </url><url>
-    <loc>http://example.org/categories/</loc>
+    <loc>tersetears.github.io/categories/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/julia/</loc>
+    <loc>tersetears.github.io/tags/julia/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/while-loops/</loc>
+    <loc>tersetears.github.io/posts/while-loops/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
+    <loc>tersetears.github.io/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/</loc>
+    <loc>tersetears.github.io/posts/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/programming/</loc>
+    <loc>tersetears.github.io/categories/programming/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/</loc>
+    <loc>tersetears.github.io/tags/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/clear-variables/</loc>
+    <loc>tersetears.github.io/posts/clear-variables/</loc>
     <lastmod>2021-07-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/repl-errors/</loc>
+    <loc>tersetears.github.io/posts/repl-errors/</loc>
     <lastmod>2021-07-07T00:00:00+00:00</lastmod>
   </url>
 </urlset>
