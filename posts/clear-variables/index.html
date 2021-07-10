@@ -77,8 +77,8 @@ y = 50 50 Now I define another function that really is supposed to just sum two 
   "keywords": [
     "julia"
   ],
-  "articleBody": "Main Issue Variables kept from previous runs of a script can be the culprit behind all sorts of bugs when developing from the REPL. Consider this simple case:\nSimple example Let’s say I define y somewhere in the code:\ny = 50 50 Now I define another function that really is supposed to just sum two values, but I forgot to also change the name of the second variable in the function call:\nfunction mysum(x,z) x + y end mysum(5,6) 55 If at this point, I would have been able to unset the value of y, I would have immediately gotten an error from the compiler.\nNow, imagine how REPL (read interactive) development works. That value definition is somewhere at the top of the script. Between the function definition and that value assignment are likely many edited lines. The function itself is quite likely much more complex than a simple sum, and the result, due to lines preceding the function definition, are not always constant. It might even be impossible to notice this bug without restarting Julia in the first place. And restarting Julia, well, is going to mean recompiling all those loaded packages. All in all, not a very REPL-development-friendly situation.\nFix for Julia It might be that a solution to this problem will be eventually (re)implemented in Julia. For now, this is how I deal with it:\nThe command names(Main) lists all the values used in the current REPL environment:\nnames(Main) 5-element Vector{Symbol}: :Base :Core :InteractiveUtils :Main :ans The Main module always has the first four elements plus an additional ans element that is produced as the return value of any operation that is carried in the REPL. Even in a REPL environment where no other commands have yet been executed, executing the above command alone produces this value. I rarely reference ans so for my purposes, keeping only the first four elements of Main is a complete cleaning of the environment.\np = 50 q = 50 d = 50; To remove assigned variable value, a bit of metaprogrammming is necessary, since we’d need the left hand side of the assignment as well.\nmacro unassign(variables...) unassigns = map(x-:($(esc(x)) = nothing), variables) quote $(unassigns...) end end @unassign p q (p,q) (nothing, nothing) To remove all variables from the environment, it is sufficient to notice that the first four elements of Main are constant. Moreover, other constant elements of the module (such as macros and functions symbols) cannot be reassigned in Julia. In other words, we can only un-assign variables for non-constant Julia symbols, hence the setdiff part.\nfunction clearvars() unassignexprs = quote $(map(x-:($(x) = nothing), setdiff(names(Main), names(Main)[isconst.(Ref(Main), names(Main))]))...) end @eval $(unassignexprs) end clearvars() (d,y) (50, 50) ",
-  "wordCount" : "450",
+  "articleBody": "Main Issue Variables kept from previous runs of a script can be the culprit behind all sorts of bugs when developing from the REPL. Consider this simple case:\nSimple example Let’s say I define y somewhere in the code:\ny = 50 50 Now I define another function that really is supposed to just sum two values, but I forgot to also change the name of the second variable in the function call:\nfunction mysum(x,z) x + y end mysum(5,6) 55 If at this point, I would have been able to unset the value of y, I would have immediately gotten an error from the compiler.\nNow, imagine how REPL (read interactive) development works. That value definition is somewhere at the top of the script. Between the function definition and that value assignment are likely many edited lines. The function itself is quite likely much more complex than a simple sum, and the result, due to lines preceding the function definition, are not always constant. It might even be impossible to notice this bug without restarting Julia in the first place. And restarting Julia, well, is going to mean recompiling all those loaded packages. All in all, not a very REPL-development-friendly situation.\nFix for Julia It might be that a solution to this problem will be eventually (re)implemented in Julia. For now, this is how I deal with it:\nThe command names(Main) lists all the values used in the current REPL environment:\nnames(Main) 12-element Vector{Symbol}: Symbol(\"@unassign\") :Base :Core :InteractiveUtils :Main :ans :clearvars :d :mysum :p :q :y The Main module always has the first four elements plus an additional ans element that is produced as the return value of any operation that is carried in the REPL. Even in a REPL environment where no other commands have yet been executed, executing the above command alone produces this value. I rarely reference ans so for my purposes, keeping only the first four elements of Main is a complete cleaning of the environment.\np = 50 q = 50 d = 50; To remove assigned variable value, a bit of metaprogrammming is necessary, since we’d need the left hand side of the assignment as well.\nmacro unassign(variables...) unassigns = map(x-:($(esc(x)) = nothing), variables) quote $(unassigns...) end end @unassign p q (p,q) (nothing, nothing) To remove all variables from the environment, it is sufficient to notice that the first four elements of Main are constant. Moreover, other constant elements of the module (such as macros and functions symbols) cannot be reassigned in Julia. In other words, we can only un-assign variables for non-constant Julia symbols, hence the setdiff part.\nfunction clearvars() unassignexprs = quote $(map(x-:($(x) = nothing), setdiff(names(Main), names(Main)[isconst.(Ref(Main), names(Main))]))...) end @eval $(unassignexprs) end clearvars() (d,y) (nothing, nothing) ",
+  "wordCount" : "457",
   "inLanguage": "en",
   "datePublished": "2021-07-09T00:00:00Z",
   "dateModified": "2021-07-09T00:00:00Z",
@@ -210,12 +210,19 @@ mysum(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>)
 <p>It might be that a solution to this problem will be eventually (re)implemented in Julia. For now, this is how I deal with it:</p>
 <p>The command <code>names(Main)</code> lists all the values used in the current REPL environment:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">names(Main)
-</code></pre></div><pre><code>5-element Vector{Symbol}:
+</code></pre></div><pre><code>12-element Vector{Symbol}:
+ Symbol(&quot;@unassign&quot;)
  :Base
  :Core
  :InteractiveUtils
  :Main
  :ans
+ :clearvars
+ :d
+ :mysum
+ :p
+ :q
+ :y
 </code></pre><p>The <code>Main</code> module always has the first four elements plus an additional <code>ans</code> element that is produced as the return value of any operation that is carried in the REPL. Even in a REPL environment where no other commands have yet been executed, executing the above command alone produces this value. I rarely reference <code>ans</code> so for my purposes, keeping only the first four elements of <code>Main</code> is a complete cleaning of the environment.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>
 q <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>
@@ -241,7 +248,7 @@ d <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>;
 clearvars()
 
 (d,y)
-</code></pre></div><pre><code>(50, 50)
+</code></pre></div><pre><code>(nothing, nothing)
 </code></pre>
 
   </div>
