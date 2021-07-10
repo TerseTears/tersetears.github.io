@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Nasolacrimia</title>
-    <link>http://example.org/</link>
+    <link>tersetears.github.io/</link>
     <description>Recent content on Nasolacrimia</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 10 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="tersetears.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Opcoming Blog Posts</title>
-      <link>http://example.org/posts/opcoming/</link>
+      <link>tersetears.github.io/posts/opcoming/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/opcoming/</guid>
+      <guid>tersetears.github.io/posts/opcoming/</guid>
       <description>Frustrations and Fixes for Julia Series  Cumbersome globals, bug-inducing as well (Ricatti solver issue) Terrible pipe operator weird choice of having map take function first then data, even though map is a data function itself. This causes issues with the pipe operator idea as well. Column-major vs row-major Need good internet for adding packages (can&amp;rsquo;t use it effectively when outside of town) Poor but understandable reshaping of vectors of vectors into matrices (especially for multidimensional arrays) No indentation rule for continuation of expression (e.</description>
     </item>
     
     <item>
       <title>Julia Frustrations and Fixes Part III: Do-While Loops</title>
-      <link>http://example.org/posts/while-loops/</link>
+      <link>tersetears.github.io/posts/while-loops/</link>
       <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/while-loops/</guid>
+      <guid>tersetears.github.io/posts/while-loops/</guid>
       <description>Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)+x\right) $$
 Of course, we know what the answer is already, for comparison:
@@ -31,10 +31,10 @@ fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_+x) i=i+1 ma
     
     <item>
       <title>Julia Frustrations and Fixes Part II: Clearing Variables</title>
-      <link>http://example.org/posts/clear-variables/</link>
+      <link>tersetears.github.io/posts/clear-variables/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/clear-variables/</guid>
+      <guid>tersetears.github.io/posts/clear-variables/</guid>
       <description>Main Issue Variables kept from previous runs of a script can be the culprit behind all sorts of bugs when developing from the REPL. Consider this simple case:
 Simple example Let&amp;rsquo;s say I define y somewhere in the code:
 y = 50 50 Now I define another function that really is supposed to just sum two values, but I forgot to also change the name of the second variable in the function call:</description>
@@ -42,10 +42,10 @@ y = 50 50 Now I define another function that really is supposed to just sum two 
     
     <item>
       <title>Julia Frustrations and Fixes Part I: REPL Errors</title>
-      <link>http://example.org/posts/repl-errors/</link>
+      <link>tersetears.github.io/posts/repl-errors/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/repl-errors/</guid>
+      <guid>tersetears.github.io/posts/repl-errors/</guid>
       <description>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&amp;rsquo;t working. Consider this example:
 Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&amp;gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:</description>
     </item>
