@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Nasolacrimia</title>
-
+<title>Posts | Nasolacrimia</title>
+<meta name="keywords" content="" />
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="canonical" href="http://example.org/" />
+<link rel="canonical" href="http://example.org/posts/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
 <link rel="preload" href="https://i.redd.it/snoovatar/snoovatars/91da1c57-c05b-4109-b9da-3e60b948d18c.png" as="image">
 <link rel="icon" href="http://example.org/favicon.ico">
@@ -20,7 +20,7 @@
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <meta name="generator" content="Hugo 0.83.1" />
-<link rel="alternate" type="application/rss+xml" href="http://example.org/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://example.org/posts/index.xml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
@@ -28,25 +28,27 @@
     onload="renderMathInElement(document.body);"></script>
 
 
-<meta property="og:title" content="Nasolacrimia" />
+<meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://example.org/" />
+<meta property="og:url" content="http://example.org/posts/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Nasolacrimia"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
+
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Nasolacrimia",
-  "url": "http://example.org/",
-  "description": "",
-  "thumbnailUrl": "http://example.org/favicon.ico",
-  "sameAs": [
-      "https://www.reddit.com/user/tersetears", "https://github.com/TerseTears", "/index.xml"
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://example.org/posts/"
+    }
   ]
 }
 </script>
@@ -99,7 +101,7 @@
         <ul id="menu">
             <li>
                 <a href="http://example.org/posts/" title="Posts">
-                    <span>Posts</span>
+                    <span class="active">Posts</span>
                 </a>
             </li>
             <li>
@@ -115,49 +117,61 @@
         </ul>
     </nav>
 </header>
-<main class="main"><div class="profile">
-    <div class="profile_inner"><img src="https://i.redd.it/snoovatar/snoovatars/91da1c57-c05b-4109-b9da-3e60b948d18c.png" alt="TerseTears"
-            height="128" width="100" />
-        <h1>Nasolacrimia</h1>
-        <span>TerseTears</span><div class="social-icons">
-    <a href="https://www.reddit.com/user/tersetears" target="_blank" rel="noopener noreferrer me" title="Reddit">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1">
-    <path
-        d="M24 11.779c0-1.459-1.192-2.645-2.657-2.645-.715 0-1.363.286-1.84.746-1.81-1.191-4.259-1.949-6.971-2.046l1.483-4.669 4.016.941-.006.058c0 1.193.975 2.163 2.174 2.163 1.198 0 2.172-.97 2.172-2.163s-.975-2.164-2.172-2.164c-.92 0-1.704.574-2.021 1.379l-4.329-1.015c-.189-.046-.381.063-.44.249l-1.654 5.207c-2.838.034-5.409.798-7.3 2.025-.474-.438-1.103-.712-1.799-.712-1.465 0-2.656 1.187-2.656 2.646 0 .97.533 1.811 1.317 2.271-.052.282-.086.567-.086.857 0 3.911 4.808 7.093 10.719 7.093s10.72-3.182 10.72-7.093c0-.274-.029-.544-.075-.81.832-.447 1.405-1.312 1.405-2.318zm-17.224 1.816c0-.868.71-1.575 1.582-1.575.872 0 1.581.707 1.581 1.575s-.709 1.574-1.581 1.574-1.582-.706-1.582-1.574zm9.061 4.669c-.797.793-2.048 1.179-3.824 1.179l-.013-.003-.013.003c-1.777 0-3.028-.386-3.824-1.179-.145-.144-.145-.379 0-.523.145-.145.381-.145.526 0 .65.647 1.729.961 3.298.961l.013.003.013-.003c1.569 0 2.648-.315 3.298-.962.145-.145.381-.144.526 0 .145.145.145.379 0 .524zm-.189-3.095c-.872 0-1.581-.706-1.581-1.574 0-.868.709-1.575 1.581-1.575s1.581.707 1.581 1.575-.709 1.574-1.581 1.574z" />
-</svg>
-    </a>
-    <a href="https://github.com/TerseTears" target="_blank" rel="noopener noreferrer me" title="Github">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path
-        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-    </path>
-</svg>
-    </a>
-    <a href="/index.xml" target="_blank" rel="noopener noreferrer me" title="Rss">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M4 11a9 9 0 0 1 9 9" />
-    <path d="M4 4a16 16 0 0 1 16 16" />
-    <circle cx="5" cy="19" r="1" />
-</svg>
-    </a>
-</div>
+<main class="main"> 
+<header class="page-header">
+  <h1>Posts</h1>
+</header>
 
-        <div class="buttons">
-            <a class="button" href="/posts" rel="noopener" title="Posts">
-                <span class="button-inner">Posts</span>
-            </a>
-            <a class="button" href="/categories" rel="noopener" title="Categories">
-                <span class="button-inner">Categories</span>
-            </a>
-            <a class="button" href="/tags" rel="noopener" title="Tags">
-                <span class="button-inner">Tags</span>
-            </a>
-        </div>
-    </div>
-</div>
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Opcoming Blog Posts</h2>
+  </header>
+  <section class="entry-content">
+    <p>Frustrations and Fixes for Julia Series  Cumbersome globals, bug-inducing as well (Ricatti solver issue) Terrible pipe operator weird choice of having map take function first then data, even though map is a data function itself. This causes issues with the pipe operator idea as well. Column-major vs row-major Need good internet for adding packages (can’t use it effectively when outside of town) Poor but understandable reshaping of vectors of vectors into matrices (especially for multidimensional arrays) No indentation rule for continuation of expression (e....</p>
+  </section>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to Opcoming Blog Posts" href="http://example.org/posts/opcoming/"></a>
+</article>
 
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Julia Frustrations and Fixes Part III: Do-While Loops</h2>
+  </header>
+  <section class="entry-content">
+    <p>Simple Iterations The goal is to solve the below expression iteratively for f(x):
+$$ f(x) = β\left(f(x)&#43;x\right) $$
+Of course, we know what the answer is already, for comparison:
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs....</p>
+  </section>
+  <footer class="entry-footer">10.07.2021</footer>
+  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part III: Do-While Loops" href="http://example.org/posts/while-loops/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Julia Frustrations and Fixes Part II: Clearing Variables</h2>
+  </header>
+  <section class="entry-content">
+    <p>Main Issue Variables kept from previous runs of a script can be the culprit behind all sorts of bugs when developing from the REPL. Consider this simple case:
+Simple example Let’s say I define y somewhere in the code:
+y = 50 50 Now I define another function that really is supposed to just sum two values, but I forgot to also change the name of the second variable in the function call:...</p>
+  </section>
+  <footer class="entry-footer">09.07.2021</footer>
+  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part II: Clearing Variables" href="http://example.org/posts/clear-variables/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Julia Frustrations and Fixes Part I: REPL Errors</h2>
+  </header>
+  <section class="entry-content">
+    <p>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:...</p>
+  </section>
+  <footer class="entry-footer">07.07.2021</footer>
+  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part I: REPL Errors" href="http://example.org/posts/repl-errors/"></a>
+</article>
     </main>
     <footer class="footer">
     <span>&copy; 2021 <a href="http://example.org/">Nasolacrimia</a></span>
