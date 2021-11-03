@@ -6,7 +6,18 @@
     <description>Recent content in julia on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/julia/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/julia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dplyr Cheatsheet to DataFrames.jl Page 1</title>
+      <link>http://tersetears.github.io/posts/dplyr-dataframes/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/dplyr-dataframes/</guid>
+      <description>Introduction With the release of v1.0 of the DataFrames.jl package, it would seem appropriate to introduce a rather comprehensive cheatsheet of it. One that is of special use to people who come from tidyverse (arguably, the best data transformation syntax there is for combined expressiveness and brevity).
+The order of topics is the same as dplyr cheatsheet.
+using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&amp;#34;library(dplyr)&amp;#34;; Setting up the data using RCall data = dataset(&amp;#34;datasets&amp;#34;, &amp;#34;iris&amp;#34;) @rput data; Summarize Cases summarize julia&amp;gt; R&amp;#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&amp;#34; RObject{VecSxp} avSL avSW 1 5.</description>
+    </item>
+    
     <item>
       <title>Julia Frustrations and Fixes Part III: Do-While Loops</title>
       <link>http://tersetears.github.io/posts/while-loops/</link>
@@ -38,7 +49,7 @@ y = 50 50 Now I define another function that really is supposed to just sum two 
       
       <guid>http://tersetears.github.io/posts/repl-errors/</guid>
       <description>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&amp;rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&amp;gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:</description>
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&amp;gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:</description>
     </item>
     
   </channel>

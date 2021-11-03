@@ -8,7 +8,7 @@
 <title>Julia Frustrations and Fixes Part I: REPL Errors | TerseTears&#39;s Blog</title>
 <meta name="keywords" content="julia" />
 <meta name="description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:">
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:">
 <meta name="author" content="">
 <link rel="canonical" href="http://tersetears.github.io/posts/repl-errors/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
@@ -31,7 +31,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:
 
 <meta property="og:title" content="Julia Frustrations and Fixes Part I: REPL Errors" />
 <meta property="og:description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:" />
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://tersetears.github.io/posts/repl-errors/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-07T00:00:00&#43;00:00" />
@@ -40,7 +40,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Julia Frustrations and Fixes Part I: REPL Errors"/>
 <meta name="twitter:description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:"/>
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:"/>
 
 
 <script type="application/ld+json">
@@ -69,12 +69,12 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:
   "@type": "BlogPosting",
   "headline": "Julia Frustrations and Fixes Part I: REPL Errors",
   "name": "Julia Frustrations and Fixes Part I: REPL Errors",
-  "description": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn\u0026rsquo;t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-\u0026gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:",
+  "description": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn\u0026rsquo;t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-\u0026gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:",
   "keywords": [
     "julia"
   ],
-  "articleBody": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:\nusing InteractiveErrors y = y^x # REPL halts at above, waiting for user input # ... # once input is received, it continues z = y; ",
-  "wordCount" : "146",
+  "articleBody": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:\nusing InteractiveErrors y = y^x # REPL halts at above, waiting for user input ERROR: UndefVarError: x not defined  # ... # once input is received, it continues z = y; ",
+  "wordCount" : "156",
   "inLanguage": "en",
   "datePublished": "2021-07-07T00:00:00Z",
   "dateModified": "2021-07-07T00:00:00Z",
@@ -194,8 +194,9 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined map(x-&gt;x, 1:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">y <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
 y <span style="color:#f92672">=</span> y<span style="color:#f92672">^</span>x
 <span style="color:#75715e"># ERROR: UndefVarError: x not defined</span>
-</code></pre></div><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+</code></pre></div><pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">map(x<span style="color:#f92672">-&gt;</span>x, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>)
 </code></pre></div><pre tabindex="0"><code>100-element Vector{Int64}:
    1
@@ -226,8 +227,9 @@ y <span style="color:#f92672">=</span> y<span style="color:#f92672">^</span>x
 
 y <span style="color:#f92672">=</span> y<span style="color:#f92672">^</span>x
 <span style="color:#75715e"># REPL halts at above, waiting for user input</span>
-</code></pre></div><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+</code></pre></div><pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># ...</span>
 <span style="color:#75715e"># once input is received, it continues</span>
 z <span style="color:#f92672">=</span> y;

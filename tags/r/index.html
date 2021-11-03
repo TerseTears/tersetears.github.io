@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>julia | TerseTears&#39;s Blog</title>
+<title>R | TerseTears&#39;s Blog</title>
 <meta name="keywords" content="" />
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="canonical" href="http://tersetears.github.io/tags/julia/" />
+<link rel="canonical" href="http://tersetears.github.io/tags/r/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://tersetears.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://tersetears.github.io/favicon-16x16.png">
@@ -19,7 +19,7 @@
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <meta name="generator" content="Hugo 0.88.1" />
-<link rel="alternate" type="application/rss+xml" href="http://tersetears.github.io/tags/julia/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://tersetears.github.io/tags/r/index.xml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
@@ -27,13 +27,13 @@
     onload="renderMathInElement(document.body);"></script>
 
 
-<meta property="og:title" content="julia" />
+<meta property="og:title" content="R" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://tersetears.github.io/tags/julia/" />
+<meta property="og:url" content="http://tersetears.github.io/tags/r/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="julia"/>
+<meta name="twitter:title" content="R"/>
 <meta name="twitter:description" content=""/>
 
 </head>
@@ -103,7 +103,7 @@
 </header>
 <main class="main"> 
 <header class="page-header">
-  <h1>julia</h1>
+  <h1>R</h1>
 </header>
 
 <article class="post-entry tag-entry"> 
@@ -117,46 +117,6 @@ using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&#34;library(d
   </section>
   <footer class="entry-footer">02.11.2021</footer>
   <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 1" href="http://tersetears.github.io/posts/dplyr-dataframes/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>Julia Frustrations and Fixes Part III: Do-While Loops</h2>
-  </header>
-  <section class="entry-content">
-    <p>Simple Iterations The goal is to solve the below expression iteratively for f(x):
-$$ f(x) = β\left(f(x)&#43;x\right) $$
-Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs....</p>
-  </section>
-  <footer class="entry-footer">10.07.2021</footer>
-  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part III: Do-While Loops" href="http://tersetears.github.io/posts/while-loops/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>Julia Frustrations and Fixes Part II: Clearing Variables</h2>
-  </header>
-  <section class="entry-content">
-    <p>Main Issue Variables kept from previous runs of a script can be the culprit behind all sorts of bugs when developing from the REPL. Consider this simple case:
-Simple example Let’s say I define y somewhere in the code:
-y = 50 50 Now I define another function that really is supposed to just sum two values, but I forgot to also change the name of the second variable in the function call:...</p>
-  </section>
-  <footer class="entry-footer">09.07.2021</footer>
-  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part II: Clearing Variables" href="http://tersetears.github.io/posts/clear-variables/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>Julia Frustrations and Fixes Part I: REPL Errors</h2>
-  </header>
-  <section class="entry-content">
-    <p>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:...</p>
-  </section>
-  <footer class="entry-footer">07.07.2021</footer>
-  <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part I: REPL Errors" href="http://tersetears.github.io/posts/repl-errors/"></a>
 </article>
     </main>
     <footer class="footer">
