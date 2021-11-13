@@ -108,6 +108,18 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>dplyr Cheatsheet to DataFrames.jl Page 2</h2>
+  </header>
+  <section class="entry-content">
+    <p>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
+using RDatasets, RCall, DataFrames, StatsBase, Statistics R&#34;library(tidyverse)&#34;; Setting up the data using RCall mpg = dataset(&#34;ggplot2&#34;, &#34;mpg&#34;); Vectorized Functions lag, lead julia&gt; R&#34;&#34;&#34; mutate(mpg, leadyear = lead(year)) %&gt;% select(year, leadyear) %&gt;% tail &#34;&#34;&#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &lt;int&gt; &lt;int&gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:...</p>
+  </section>
+  <footer class="entry-footer">13.11.2021</footer>
+  <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 2" href="http://tersetears.github.io/posts/dplyr-dataframes-part2/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>dplyr Cheatsheet to DataFrames.jl Page 1</h2>
   </header>
   <section class="entry-content">

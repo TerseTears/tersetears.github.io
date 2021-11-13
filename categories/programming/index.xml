@@ -6,7 +6,17 @@
     <description>Recent content in programming on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dplyr Cheatsheet to DataFrames.jl Page 2</title>
+      <link>http://tersetears.github.io/posts/dplyr-dataframes-part2/</link>
+      <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/dplyr-dataframes-part2/</guid>
+      <description>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
+using RDatasets, RCall, DataFrames, StatsBase, Statistics R&amp;#34;library(tidyverse)&amp;#34;; Setting up the data using RCall mpg = dataset(&amp;#34;ggplot2&amp;#34;, &amp;#34;mpg&amp;#34;); Vectorized Functions lag, lead julia&amp;gt; R&amp;#34;&amp;#34;&amp;#34; mutate(mpg, leadyear = lead(year)) %&amp;gt;% select(year, leadyear) %&amp;gt;% tail &amp;#34;&amp;#34;&amp;#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:</description>
+    </item>
+    
     <item>
       <title>dplyr Cheatsheet to DataFrames.jl Page 1</title>
       <link>http://tersetears.github.io/posts/dplyr-dataframes/</link>
