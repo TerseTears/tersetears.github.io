@@ -2,30 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://tersetears.github.io/posts/upcoming/</loc>
-  </url><url>
     <loc>http://tersetears.github.io/categories/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/categories/data-science/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/posts/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/categories/programming/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/tags/r/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/tags/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/tags/tyecon/</loc>
+    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://tersetears.github.io/posts/dplyr-dataframes-part2/</loc>
     <lastmod>2021-11-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://tersetears.github.io/tags/julia/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://tersetears.github.io/posts/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://tersetears.github.io/categories/programming/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://tersetears.github.io/tags/r/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://tersetears.github.io/tags/</loc>
-    <lastmod>2021-11-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://tersetears.github.io/</loc>
     <lastmod>2021-11-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://tersetears.github.io/posts/dplyr-dataframes/</loc>
@@ -39,5 +46,7 @@
   </url><url>
     <loc>http://tersetears.github.io/posts/repl-errors/</loc>
     <lastmod>2021-07-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://tersetears.github.io/posts/upcoming/</loc>
   </url>
 </urlset>

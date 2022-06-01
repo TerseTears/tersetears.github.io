@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>data science on TerseTears&#39;s Blog</title>
+    <link>http://tersetears.github.io/categories/data-science/</link>
+    <description>Recent content in data science on TerseTears&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/data-science/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Journey Through `tyecon`: Exploring Food.com Tags</title>
+      <link>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</link>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</guid>
+      <description>Introduction I&amp;rsquo;ve been working on my R package, tyecon for some time now. I think it can be a useful tool in performing day to day data analysis tasks. The idea is very simple: More higher order macros. There&amp;rsquo;s no reason to focus on the handful of existing ones, like the magrittr pipes or the dplyr syntax. We have a language here that supports lazy evaluation and first class functions. This is all we need to make programming life easier.</description>
+    </item>
+    
+  </channel>
+</rss>

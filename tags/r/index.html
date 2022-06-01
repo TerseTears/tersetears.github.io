@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.98.0" />
 <link rel="alternate" type="application/rss+xml" href="http://tersetears.github.io/tags/r/index.xml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
@@ -108,11 +108,22 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>Journey Through `tyecon`: Exploring Food.com Tags</h2>
+  </header>
+  <section class="entry-content">
+    <p>Introduction I’ve been working on my R package, tyecon for some time now. I think it can be a useful tool in performing day to day data analysis tasks. The idea is very simple: More higher order macros. There’s no reason to focus on the handful of existing ones, like the magrittr pipes or the dplyr syntax. We have a language here that supports lazy evaluation and first class functions. This is all we need to make programming life easier....</p>
+  </section>
+  <footer class="entry-footer">01.06.2022</footer>
+  <a class="entry-link" aria-label="post link to Journey Through `tyecon`: Exploring Food.com Tags" href="http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>dplyr Cheatsheet to DataFrames.jl Page 2</h2>
   </header>
   <section class="entry-content">
     <p>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
-using RDatasets, RCall, DataFrames, StatsBase, Statistics R&#34;library(tidyverse)&#34;; Setting up the data using RCall mpg = dataset(&#34;ggplot2&#34;, &#34;mpg&#34;); Vectorized Functions lag, lead julia&gt; R&#34;&#34;&#34; mutate(mpg, leadyear = lead(year)) %&gt;% select(year, leadyear) %&gt;% tail &#34;&#34;&#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &lt;int&gt; &lt;int&gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:...</p>
+using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&#34;library(tidyverse)&#34;; Setting up the data using RCall mpg = dataset(&#34;ggplot2&#34;, &#34;mpg&#34;); Vectorized Functions lag, lead julia&gt; R&#34;&#34;&#34; mutate(mpg, leadyear = lead(year)) %&gt;% select(year, leadyear) %&gt;% tail &#34;&#34;&#34; RObject{VecSxp} # A tibble: 6 x 2  year leadyear  &lt;int&gt; &lt;int&gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:...</p>
   </section>
   <footer class="entry-footer">13.11.2021</footer>
   <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 2" href="http://tersetears.github.io/posts/dplyr-dataframes-part2/"></a>
@@ -125,14 +136,14 @@ using RDatasets, RCall, DataFrames, StatsBase, Statistics R&#34;library(tidyvers
   <section class="entry-content">
     <p>Introduction With the release of v1.0 of the DataFrames.jl package, it would seem appropriate to introduce a rather comprehensive cheatsheet of it. One that is of special use to people who come from tidyverse (arguably, the best data transformation syntax there is for combined expressiveness and brevity).
 The order of topics is the same as dplyr cheatsheet.
-using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&#34;library(dplyr)&#34;; Setting up the data using RCall data = dataset(&#34;datasets&#34;, &#34;iris&#34;) @rput data; Summarize Cases summarize julia&gt; R&#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&#34; RObject{VecSxp} avSL avSW 1 5....</p>
+using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&#34;library(dplyr)&#34;; Setting up the data using RCall data = dataset(&#34;datasets&#34;, &#34;iris&#34;)  @rput data; Summarize Cases summarize julia&gt; R&#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&#34; RObject{VecSxp}  avSL avSW 1 5....</p>
   </section>
   <footer class="entry-footer">02.11.2021</footer>
   <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 1" href="http://tersetears.github.io/posts/dplyr-dataframes/"></a>
 </article>
     </main>
     <footer class="footer">
-    <span>&copy; 2021 <a href="http://tersetears.github.io/">TerseTears&#39;s Blog</a></span>
+    <span>&copy; 2022 <a href="http://tersetears.github.io/">TerseTears&#39;s Blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

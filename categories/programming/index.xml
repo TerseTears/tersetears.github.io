@@ -6,7 +6,16 @@
     <description>Recent content in programming on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Journey Through `tyecon`: Exploring Food.com Tags</title>
+      <link>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</link>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</guid>
+      <description>Introduction I&amp;rsquo;ve been working on my R package, tyecon for some time now. I think it can be a useful tool in performing day to day data analysis tasks. The idea is very simple: More higher order macros. There&amp;rsquo;s no reason to focus on the handful of existing ones, like the magrittr pipes or the dplyr syntax. We have a language here that supports lazy evaluation and first class functions. This is all we need to make programming life easier.</description>
+    </item>
+    
     <item>
       <title>dplyr Cheatsheet to DataFrames.jl Page 2</title>
       <link>http://tersetears.github.io/posts/dplyr-dataframes-part2/</link>
@@ -14,7 +23,7 @@
       
       <guid>http://tersetears.github.io/posts/dplyr-dataframes-part2/</guid>
       <description>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
-using RDatasets, RCall, DataFrames, StatsBase, Statistics R&amp;#34;library(tidyverse)&amp;#34;; Setting up the data using RCall mpg = dataset(&amp;#34;ggplot2&amp;#34;, &amp;#34;mpg&amp;#34;); Vectorized Functions lag, lead julia&amp;gt; R&amp;#34;&amp;#34;&amp;#34; mutate(mpg, leadyear = lead(year)) %&amp;gt;% select(year, leadyear) %&amp;gt;% tail &amp;#34;&amp;#34;&amp;#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:</description>
+using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&amp;#34;library(tidyverse)&amp;#34;; Setting up the data using RCall mpg = dataset(&amp;#34;ggplot2&amp;#34;, &amp;#34;mpg&amp;#34;); Vectorized Functions lag, lead julia&amp;gt; R&amp;#34;&amp;#34;&amp;#34; mutate(mpg, leadyear = lead(year)) %&amp;gt;% select(year, leadyear) %&amp;gt;% tail &amp;#34;&amp;#34;&amp;#34; RObject{VecSxp} # A tibble: 6 x 2  year leadyear  &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:</description>
     </item>
     
     <item>
@@ -25,7 +34,7 @@ using RDatasets, RCall, DataFrames, StatsBase, Statistics R&amp;#34;library(tidy
       <guid>http://tersetears.github.io/posts/dplyr-dataframes/</guid>
       <description>Introduction With the release of v1.0 of the DataFrames.jl package, it would seem appropriate to introduce a rather comprehensive cheatsheet of it. One that is of special use to people who come from tidyverse (arguably, the best data transformation syntax there is for combined expressiveness and brevity).
 The order of topics is the same as dplyr cheatsheet.
-using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&amp;#34;library(dplyr)&amp;#34;; Setting up the data using RCall data = dataset(&amp;#34;datasets&amp;#34;, &amp;#34;iris&amp;#34;) @rput data; Summarize Cases summarize julia&amp;gt; R&amp;#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&amp;#34; RObject{VecSxp} avSL avSW 1 5.</description>
+using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&amp;#34;library(dplyr)&amp;#34;; Setting up the data using RCall data = dataset(&amp;#34;datasets&amp;#34;, &amp;#34;iris&amp;#34;)  @rput data; Summarize Cases summarize julia&amp;gt; R&amp;#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&amp;#34; RObject{VecSxp}  avSL avSW 1 5.</description>
     </item>
     
     <item>
@@ -37,8 +46,8 @@ using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&amp;#34;libra
       <description>Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)+x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&amp;rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_+x) i=i+1 maximum(abs.</description>
+β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&amp;rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_+x)  i=i+1  maximum(abs.</description>
     </item>
     
     <item>
