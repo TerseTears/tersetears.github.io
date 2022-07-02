@@ -1,0 +1,206 @@
+
+---
+title: "Journey Through `tyecon`: Predictions on Recipe Nutritions"
+date: 2022-07-02
+categories: [programming, data science]
+tags: [R, tyecon]
+---
+
+## Introduction
+
+In this second part of the "journey through `tyecon`" series, I want to
+showcase the package's facilities in simplifying tasks common to the predictive
+modelling part of data analysis. I will be using the *Food.com* dataset as
+before.
+
+## Setup and Data Import
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(tidyselect)
+library(magrittr)
+library(vroom)
+library(tyecon)
+library(rsample)
+library(yardstick)
+library(glmnet)
+library(earth)
+library(pls)
+
+knitr::opts_chunk$set(fig.path = "")
+knitr::opts_chunk$set(dev = 'svg')
+theme_set(theme_light())
+set.seed(123)
+```
+
+```{r data-import, message = FALSE}
+recipes <- vroom("~/Workspace/foodrecipes/RAW_recipes.csv")
+interacts <- vroom("~/Workspace/foodrecipes/RAW_interactions.csv")
+```
+
+
+Nutrition values, except for calories, are all percent of daily value, a daily
+quota filled by the amount of the percentage by the consumption of the specific
+food.
+
+```{r}
+nutrs <- recipes %->% {
+  ids <- id
+  select(nutrition)
+  mutate(nutrition = str_replace_all(nutrition, "[\\[\\]\\']", ""))
+  separate(nutrition,
+    into = c(
+      "calories", "sat_fat", "sugar", "sodium", "protein", "tot_fat", "carbs"
+    ),
+    sep = ", ", convert = TRUE
+  )
+  # Center and scale too
+  mutate(across(everything(), \(col) scale(col)[, 1]))
+  set_attr("ids", ids)
+}
+nutrs
+```
+
+And splitting into training and validation:
+
+```r
+nutrs_train:nutrs_test %<-%
+  (initial_split(nutrs) %>% {
+    list(training(.), testing(.))
+  })
+```
+
+## Predicting Protein from PDV
+
+Of course, since this is an index, it should just work well.
+
+### Linear model
+
+```{r}
+lm_model <- lm(protein ~ .,
+  data = nutrs_train) %$>% {
+  model <- .
+  summary(.) %$>% {
+    coefs <- as_tibble(coefficients, rownames = "term")
+    stats <-
+      tibble(r.squared, sigma, df = fstatistic[2], fstat = fstatistic[1])
+  }
+  pred_metrics <- {
+    pred_tibble <- tibble(
+      truth = fitted.values(.) + residuals(.), estimate = fitted.values(.)
+    )
+    map_dfr(c(rmse, rsq, rsq_trad, msd, mae), ~ .(pred_tibble, truth, estimate))
+  }
+}
+lm_model
+```
+
+Predictions on the test data:
+
+```{r}
+map_dfr(c(rmse, rsq, rsq_trad, msd, mae), ~ .(
+  tibble(
+    truth = nutrs_test$calories, estimate = predict(lm_model$model, nutrs_test)
+  ),
+  truth, estimate
+))
+```
+
+### Multiple models together
+
+We first build the general interface function for our loop over models:
+
+```{r}
+lasso <- partial(glmnet, alpha = 1)
+ridge <- partial(glmnet, alpha = 0)
+
+# prefix with dot dot to avoid name collision
+regression <- convoke(
+  list(formula, data),
+  lasso(
+    x = model.matrix(formula, data)[, -1],
+    y = data[[all.vars(formula)[1]]]
+  ),
+  ridge(
+    x = model.matrix(formula, data)[, -1],
+    y = data[[all.vars(formula)[1]]]
+  ),
+  earth(formula, data),
+  plsr(formula, data = data)
+)
+regression
+```
+
+And also the predict function:
+
+
+```{r}
+pred_vec <- function(x, newdata, formula, ...) UseMethod("pred_vec")
+pred_vec.elnet <- function(x, newdata, formula, ...) {
+  predict(x, newx = model.matrix(formula, newdata)[, -1], ...)[, 1]
+}
+pred_vec.earth <- function(x, newdata, formula, ...) {
+  predict(x, newdata = newdata, ...)[, 1]
+}
+pred_vec.mvr <- function(x, newdata, formula, ...) {
+  retval <- predict(x, newdata = newdata, ...)
+  retval[, , dim(retval)[[3]]]
+}
+
+pred_vec_regs <- conflate(pred_vec(x, newdata, formula))
+pred_vec_regs
+```
+
+And the main loop:
+
+```{r}
+models_preds <- control(
+  {
+    holdout <- assessment(fold$splits)
+
+    model <- regression(protein ~ .,
+      analysis(fold$splits),
+      interface = interface, lasso.lambda = lambda,
+      earth.degree = degree, plsr.ncomp = 6
+    )
+
+    holdout$.fit <- pred_vec_regs(model, holdout, protein ~ .)
+
+    list(model = model, rmse = rmse(holdout, protein, .fit)[[".estimate"]])
+  },
+  fold = transpose(vfold_cv(nutrs_train, 5)) ~ 1,
+  interface = c("lasso", "earth", "plsr") ~ 2,
+  lambda = c(0.1, 0.2) ~ 3,
+  degree = c(1, 2) ~ 4,
+  ncomp = c(5, 6) ~ 5,
+  .refiner = ~ confine(.,
+    lambda = interface %in% c("lasso", "ridge"), degree = interface == "earth",
+    ncomp = interface == "plsr"
+  ),
+  .unnest_value = TRUE
+)
+models_preds
+```
+
+Now we can choose the appropriate model by testing the data on the validation
+set:
+
+```{r}
+models_chosen <- group_by(models_preds, across(-c(fold, model, rmse))) %>%
+  summarise(model = list(first(model)), rmse = mean(rmse), .groups = "drop")
+models_chosen
+```
+
+And the validation set:
+
+```{r}
+mutate(rowwise(models_chosen), valid_rmse =
+  {
+    valid_set <- nutrs_test
+    valid_set$.fit <- pred_vec_regs(model, valid_set, protein ~ .)
+    rmse(valid_set, protein, .fit)[[".estimate"]]
+  }
+)
+```
+
+

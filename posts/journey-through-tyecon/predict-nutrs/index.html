@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Journey Through `tyecon`: Predictions on Recipe Nutritions | TerseTears&#39;s Blog</title>
+<meta name="keywords" content="R, tyecon" />
+<meta name="description" content="Introduction In this second part of the &ldquo;journey through tyecon&rdquo; series, I want to showcase the package&rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &#34;&#34;) knitr::opts_chunk$set(dev = &#39;svg&#39;) theme_set(theme_light()) set.seed(123) recipes &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;) interacts &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food.">
+<meta name="author" content="">
+<link rel="canonical" href="http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.e85ad0406048e8176e1c7661b25d5c69297ddfe41dc4124cf75ecb99a4f7b3d1.js" integrity="sha256-6FrQQGBI6BduHHZhsl1caSl93&#43;QdxBJM917LmaT3s9E="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="http://tersetears.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://tersetears.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://tersetears.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://tersetears.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.101.0" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
+<meta property="og:title" content="Journey Through `tyecon`: Predictions on Recipe Nutritions" />
+<meta property="og:description" content="Introduction In this second part of the &ldquo;journey through tyecon&rdquo; series, I want to showcase the package&rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &#34;&#34;) knitr::opts_chunk$set(dev = &#39;svg&#39;) theme_set(theme_light()) set.seed(123) recipes &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;) interacts &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-07-02T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Journey Through `tyecon`: Predictions on Recipe Nutritions"/>
+<meta name="twitter:description" content="Introduction In this second part of the &ldquo;journey through tyecon&rdquo; series, I want to showcase the package&rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &#34;&#34;) knitr::opts_chunk$set(dev = &#39;svg&#39;) theme_set(theme_light()) set.seed(123) recipes &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;) interacts &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://tersetears.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Journey Through `tyecon`: Predictions on Recipe Nutritions",
+      "item": "http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Journey Through `tyecon`: Predictions on Recipe Nutritions",
+  "name": "Journey Through `tyecon`: Predictions on Recipe Nutritions",
+  "description": "Introduction In this second part of the \u0026ldquo;journey through tyecon\u0026rdquo; series, I want to showcase the package\u0026rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.\nSetup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = \u0026#34;\u0026#34;) knitr::opts_chunk$set(dev = \u0026#39;svg\u0026#39;) theme_set(theme_light()) set.seed(123) recipes \u0026lt;- vroom(\u0026#34;~/Workspace/foodrecipes/RAW_recipes.csv\u0026#34;) interacts \u0026lt;- vroom(\u0026#34;~/Workspace/foodrecipes/RAW_interactions.csv\u0026#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food.",
+  "keywords": [
+    "R", "tyecon"
+  ],
+  "articleBody": "Introduction In this second part of the “journey through tyecon” series, I want to showcase the package’s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.\nSetup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = \"\") knitr::opts_chunk$set(dev = 'svg') theme_set(theme_light()) set.seed(123) recipes \u003c- vroom(\"~/Workspace/foodrecipes/RAW_recipes.csv\") interacts \u003c- vroom(\"~/Workspace/foodrecipes/RAW_interactions.csv\") Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food.\nnutrs \u003c- recipes %-\u003e% { ids \u003c- id select(nutrition) mutate(nutrition = str_replace_all(nutrition, \"[\\\\[\\\\]\\\\']\", \"\")) separate(nutrition, into = c( \"calories\", \"sat_fat\", \"sugar\", \"sodium\", \"protein\", \"tot_fat\", \"carbs\" ), sep = \", \", convert = TRUE ) # Center and scale too mutate(across(everything(), \\(col) scale(col)[, 1])) set_attr(\"ids\", ids) } nutrs ## # A tibble: 231,637 × 7 ## calories sat_fat sugar sodium protein tot_fat carbs ## ## 1 -0.355 -0.464 -0.0891 -0.228 -0.559 -0.464 -0.141 ## 2 -0.253 -0.232 -0.105 -0.0996 -0.217 -0.108 -0.178 ## 3 -0.172 -0.181 -0.0654 0.135 0.0738 -0.189 -0.129 ## 4 -0.0890 -0.245 -0.0929 -0.213 -0.354 -0.383 0.0543 ## 5 -0.102 -0.451 0.316 -0.0542 -0.542 -0.464 0.152 ## 6 -0.264 -0.335 -0.0366 -0.206 -0.439 -0.260 -0.105 ## 7 -0.0784 0.217 -0.0966 -0.0466 -0.491 -0.220 -0.117 ## 8 0.534 0.603 0.367 1.86 1.05 0.411 0.250 ## 9 3.19 2.80 1.53 0.613 1.58 3.92 2.50 ## 10 1.85 1.59 1.11 0.582 0.467 2.69 1.50 ## # … with 231,627 more rows And splitting into training and validation:\nnutrs_train:nutrs_test %\u003c-% (initial_split(nutrs) %\u003e% { list(training(.), testing(.)) }) Predicting Protein from PDV Of course, since this is an index, it should just work well.\nLinear model lm_model \u003c- lm(protein ~ ., data = nutrs_train) %$\u003e% { model \u003c- . summary(.) %$\u003e% { coefs \u003c- as_tibble(coefficients, rownames = \"term\") stats \u003c- tibble(r.squared, sigma, df = fstatistic[2], fstat = fstatistic[1]) } pred_metrics \u003c- { pred_tibble \u003c- tibble( truth = fitted.values(.) + residuals(.), estimate = fitted.values(.) ) map_dfr(c(rmse, rsq, rsq_trad, msd, mae), ~ .(pred_tibble, truth, estimate)) } } lm_model ## $model ## ## Call: ## lm(formula = protein ~ ., data = nutrs_train) ## ## Coefficients: ## (Intercept) calories sat_fat sugar sodium tot_fat carbs ## -0.0002895 7.3769225 -2.7190916 -0.1166868 0.0264789 0.0542644 -5.7393293 ## ## ## $coefs ## # A tibble: 7 × 5 ## term Estimate `Std. Error` `t value` `Pr(\u003e|t|)` ## ## 1 (Intercept) -0.000290 0.000907 -0.319 7.50e- 1 ## 2 calories 7.38 0.00933 791. 0 ## 3 sat_fat -2.72 0.00412 -660. 0 ## 4 sugar -0.117 0.00520 -22.5 1.62e-111 ## 5 sodium 0.0265 0.000861 30.8 2.90e-207 ## 6 tot_fat 0.0543 0.00181 30.0 2.59e-197 ## 7 carbs -5.74 0.00987 -582. 0 ## ## $stats ## # A tibble: 1 × 4 ## r.squared sigma df fstat ## ## 1 0.849 0.378 6 163409. ## ## $pred_metrics ## # A tibble: 5 × 3 ## .metric .estimator .estimate ## ## 1 rmse standard 3.78e- 1 ## 2 rsq standard 8.49e- 1 ## 3 rsq_trad standard 8.49e- 1 ## 4 msd standard 1.62e-18 ## 5 mae standard 1.24e- 1 Predictions on the test data:\nmap_dfr(c(rmse, rsq, rsq_trad, msd, mae), ~ .( tibble( truth = nutrs_test$calories, estimate = predict(lm_model$model, nutrs_test) ), truth, estimate )) ## # A tibble: 5 × 3 ## .metric .estimator .estimate ## ## 1 rmse standard 0.717 ## 2 rsq standard 0.467 ## 3 rsq_trad standard -0.142 ## 4 msd standard -0.00258 ## 5 mae standard 0.338 Multiple models together We first build the general interface function for our loop over models:\nlasso \u003c- partial(glmnet, alpha = 1) ridge \u003c- partial(glmnet, alpha = 0) # prefix with dot dot to avoid name collision regression \u003c- convoke( list(formula, data), lasso( x = model.matrix(formula, data)[, -1], y = data[[all.vars(formula)[1]]] ), ridge( x = model.matrix(formula, data)[, -1], y = data[[all.vars(formula)[1]]] ), earth(formula, data), plsr(formula, data = data) ) regression ## convoke function ## interfaces: lasso(), ridge(), earth(), plsr() ## args: formula, data, interface = lasso, interface.args And also the predict function:\npred_vec \u003c- function(x, newdata, formula, ...) UseMethod(\"pred_vec\") pred_vec.elnet \u003c- function(x, newdata, formula, ...) { predict(x, newx = model.matrix(formula, newdata)[, -1], ...)[, 1] } pred_vec.earth \u003c- function(x, newdata, formula, ...) { predict(x, newdata = newdata, ...)[, 1] } pred_vec.mvr \u003c- function(x, newdata, formula, ...) { retval \u003c- predict(x, newdata = newdata, ...) retval[, , dim(retval)[[3]]] } pred_vec_regs \u003c- conflate(pred_vec(x, newdata, formula)) pred_vec_regs ## conflate function for pred_vec ## args: x, newdata, formula, object.args And the main loop:\nmodels_preds \u003c- control( { holdout \u003c- assessment(fold$splits) model \u003c- regression(protein ~ ., analysis(fold$splits), interface = interface, lasso.lambda = lambda, earth.degree = degree, plsr.ncomp = 6 ) holdout$.fit \u003c- pred_vec_regs(model, holdout, protein ~ .) list(model = model, rmse = rmse(holdout, protein, .fit)[[\".estimate\"]]) }, fold = transpose(vfold_cv(nutrs_train, 5)) ~ 1, interface = c(\"lasso\", \"earth\", \"plsr\") ~ 2, lambda = c(0.1, 0.2) ~ 3, degree = c(1, 2) ~ 4, ncomp = c(5, 6) ~ 5, .refiner = ~ confine(., lambda = interface %in% c(\"lasso\", \"ridge\"), degree = interface == \"earth\", ncomp = interface == \"plsr\" ), .unnest_value = TRUE ) models_preds ## # A tibble: 30 × 7 ## fold interface lambda degree ncomp model rmse ## ## 1 lasso 0.1 NA NA 0.870 ## 2 lasso 0.2 NA NA 0.911 ## 3 earth NA 1 NA 0.351 ## 4 earth NA 2 NA 0.341 ## 5 plsr NA NA 5 0.330 ## 6 plsr NA NA 6 0.330 ## 7 lasso 0.1 NA NA 1.02 ## 8 lasso 0.2 NA NA 1.09 ## 9 earth NA 1 NA 2.50 ## 10 earth NA 2 NA 4.84 ## # … with 20 more rows Now we can choose the appropriate model by testing the data on the validation set:\nmodels_chosen \u003c- group_by(models_preds, across(-c(fold, model, rmse))) %\u003e% summarise(model = list(first(model)), rmse = mean(rmse), .groups = \"drop\") models_chosen ## # A tibble: 6 × 6 ## interface lambda degree ncomp model rmse ## ## 1 earth NA 1 NA 0.827 ## 2 earth NA 2 NA 1.60 ## 3 lasso 0.1 NA NA 0.868 ## 4 lasso 0.2 NA NA 0.895 ## 5 plsr NA NA 5 0.394 ## 6 plsr NA NA 6 0.394 And the validation set:\nmutate(rowwise(models_chosen), valid_rmse = { valid_set \u003c- nutrs_test valid_set$.fit \u003c- pred_vec_regs(model, valid_set, protein ~ .) rmse(valid_set, protein, .fit)[[\".estimate\"]] } ) ## # A tibble: 6 × 7 ## # Rowwise: ## interface lambda degree ncomp model rmse valid_rmse ## ## 1 earth NA 1 NA 0.827 0.397 ## 2 earth NA 2 NA 1.60 0.335 ## 3 lasso 0.1 NA NA 0.868 0.903 ## 4 lasso 0.2 NA NA 0.895 0.944 ## 5 plsr NA NA 5 0.394 0.403 ## 6 plsr NA NA 6 0.394 0.403 ",
+  "wordCount" : "1209",
+  "inLanguage": "en",
+  "datePublished": "2022-07-02T00:00:00Z",
+  "dateModified": "2022-07-02T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TerseTears's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://tersetears.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://tersetears.github.io/" accesskey="h" title="TerseTears&#39;s Blog (Alt + H)">TerseTears&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://tersetears.github.io/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://tersetears.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://tersetears.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Journey Through `tyecon`: Predictions on Recipe Nutritions
+    </h1>
+    <div class="post-meta">02.07.2022
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <div class="details">Table of Contents</div>
+        </summary>
+        <div class="inner"><ul>
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a></li>
+                <li>
+                    <a href="#setup-and-data-import" aria-label="Setup and Data Import">Setup and Data Import</a></li>
+                <li>
+                    <a href="#predicting-protein-from-pdv" aria-label="Predicting Protein from PDV">Predicting Protein from PDV</a><ul>
+                        
+                <li>
+                    <a href="#linear-model" aria-label="Linear model">Linear model</a></li>
+                <li>
+                    <a href="#multiple-models-together" aria-label="Multiple models together">Multiple models together</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p>In this second part of the &ldquo;journey through <code>tyecon</code>&rdquo; series, I want to
+showcase the package&rsquo;s facilities in simplifying tasks common to the predictive
+modelling part of data analysis. I will be using the <em>Food.com</em> dataset as
+before.</p>
+<h2 id="setup-and-data-import">Setup and Data Import<a hidden class="anchor" aria-hidden="true" href="#setup-and-data-import">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(tidyverse)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(tidyselect)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(magrittr)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(vroom)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(tyecon)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(rsample)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(yardstick)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(glmnet)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(earth)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(pls)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>knitr<span style="color:#f92672">::</span>opts_chunk<span style="color:#f92672">$</span><span style="color:#a6e22e">set</span>(fig.path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>knitr<span style="color:#f92672">::</span>opts_chunk<span style="color:#f92672">$</span><span style="color:#a6e22e">set</span>(dev <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;svg&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme_set</span>(<span style="color:#a6e22e">theme_light</span>())
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">set.seed</span>(<span style="color:#ae81ff">123</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>recipes <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">vroom</span>(<span style="color:#e6db74">&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>interacts <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">vroom</span>(<span style="color:#e6db74">&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;</span>)
+</span></span></code></pre></div><p>Nutrition values, except for calories, are all percent of daily value, a daily
+quota filled by the amount of the percentage by the consumption of the specific
+food.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>nutrs <span style="color:#f92672">&lt;-</span> recipes <span style="color:#f92672">%-&gt;%</span> {
+</span></span><span style="display:flex;"><span>  ids <span style="color:#f92672">&lt;-</span> id
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">select</span>(nutrition)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">mutate</span>(nutrition <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace_all</span>(nutrition, <span style="color:#e6db74">&#34;[\\[\\]\\&#39;]&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">separate</span>(nutrition,
+</span></span><span style="display:flex;"><span>    into <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;calories&#34;</span>, <span style="color:#e6db74">&#34;sat_fat&#34;</span>, <span style="color:#e6db74">&#34;sugar&#34;</span>, <span style="color:#e6db74">&#34;sodium&#34;</span>, <span style="color:#e6db74">&#34;protein&#34;</span>, <span style="color:#e6db74">&#34;tot_fat&#34;</span>, <span style="color:#e6db74">&#34;carbs&#34;</span>
+</span></span><span style="display:flex;"><span>    ),
+</span></span><span style="display:flex;"><span>    sep <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;, &#34;</span>, convert <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Center and scale too</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">mutate</span>(<span style="color:#a6e22e">across</span>(<span style="color:#a6e22e">everything</span>(), <span style="color:#a6e22e">\</span>(col) <span style="color:#a6e22e">scale</span>(col)[, <span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">set_attr</span>(<span style="color:#e6db74">&#34;ids&#34;</span>, ids)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>nutrs
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 231,637 × 7
+##    calories sat_fat   sugar  sodium protein tot_fat   carbs
+##       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1  -0.355   -0.464 -0.0891 -0.228  -0.559   -0.464 -0.141 
+##  2  -0.253   -0.232 -0.105  -0.0996 -0.217   -0.108 -0.178 
+##  3  -0.172   -0.181 -0.0654  0.135   0.0738  -0.189 -0.129 
+##  4  -0.0890  -0.245 -0.0929 -0.213  -0.354   -0.383  0.0543
+##  5  -0.102   -0.451  0.316  -0.0542 -0.542   -0.464  0.152 
+##  6  -0.264   -0.335 -0.0366 -0.206  -0.439   -0.260 -0.105 
+##  7  -0.0784   0.217 -0.0966 -0.0466 -0.491   -0.220 -0.117 
+##  8   0.534    0.603  0.367   1.86    1.05     0.411  0.250 
+##  9   3.19     2.80   1.53    0.613   1.58     3.92   2.50  
+## 10   1.85     1.59   1.11    0.582   0.467    2.69   1.50  
+## # … with 231,627 more rows
+</code></pre><p>And splitting into training and validation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>nutrs_train<span style="color:#f92672">:</span>nutrs_test <span style="color:#f92672">%&lt;-%</span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#a6e22e">initial_split</span>(nutrs) <span style="color:#f92672">%&gt;%</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">list</span>(<span style="color:#a6e22e">training</span>(.), <span style="color:#a6e22e">testing</span>(.))
+</span></span><span style="display:flex;"><span>  })
+</span></span></code></pre></div><h2 id="predicting-protein-from-pdv">Predicting Protein from PDV<a hidden class="anchor" aria-hidden="true" href="#predicting-protein-from-pdv">#</a></h2>
+<p>Of course, since this is an index, it should just work well.</p>
+<h3 id="linear-model">Linear model<a hidden class="anchor" aria-hidden="true" href="#linear-model">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>lm_model <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lm</span>(protein <span style="color:#f92672">~</span> .,
+</span></span><span style="display:flex;"><span>  data <span style="color:#f92672">=</span> nutrs_train) <span style="color:#f92672">%$&gt;%</span> {
+</span></span><span style="display:flex;"><span>  model <span style="color:#f92672">&lt;-</span> .
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">summary</span>(.) <span style="color:#f92672">%$&gt;%</span> {
+</span></span><span style="display:flex;"><span>    coefs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">as_tibble</span>(coefficients, rownames <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;term&#34;</span>)
+</span></span><span style="display:flex;"><span>    stats <span style="color:#f92672">&lt;-</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tibble</span>(r.squared, sigma, df <span style="color:#f92672">=</span> fstatistic[2], fstat <span style="color:#f92672">=</span> fstatistic[1])
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  pred_metrics <span style="color:#f92672">&lt;-</span> {
+</span></span><span style="display:flex;"><span>    pred_tibble <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">tibble</span>(
+</span></span><span style="display:flex;"><span>      truth <span style="color:#f92672">=</span> <span style="color:#a6e22e">fitted.values</span>(.) <span style="color:#f92672">+</span> <span style="color:#a6e22e">residuals</span>(.), estimate <span style="color:#f92672">=</span> <span style="color:#a6e22e">fitted.values</span>(.)
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">map_dfr</span>(<span style="color:#a6e22e">c</span>(rmse, rsq, rsq_trad, msd, mae), <span style="color:#f92672">~</span> .(pred_tibble, truth, estimate))
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>lm_model
+</span></span></code></pre></div><pre tabindex="0"><code>## $model
+## 
+## Call:
+## lm(formula = protein ~ ., data = nutrs_train)
+## 
+## Coefficients:
+## (Intercept)     calories      sat_fat        sugar       sodium      tot_fat        carbs  
+##  -0.0002895    7.3769225   -2.7190916   -0.1166868    0.0264789    0.0542644   -5.7393293  
+## 
+## 
+## $coefs
+## # A tibble: 7 × 5
+##   term         Estimate `Std. Error` `t value` `Pr(&gt;|t|)`
+##   &lt;chr&gt;           &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 (Intercept) -0.000290     0.000907    -0.319  7.50e-  1
+## 2 calories     7.38         0.00933    791.     0        
+## 3 sat_fat     -2.72         0.00412   -660.     0        
+## 4 sugar       -0.117        0.00520    -22.5    1.62e-111
+## 5 sodium       0.0265       0.000861    30.8    2.90e-207
+## 6 tot_fat      0.0543       0.00181     30.0    2.59e-197
+## 7 carbs       -5.74         0.00987   -582.     0        
+## 
+## $stats
+## # A tibble: 1 × 4
+##   r.squared sigma    df   fstat
+##       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1     0.849 0.378     6 163409.
+## 
+## $pred_metrics
+## # A tibble: 5 × 3
+##   .metric  .estimator .estimate
+##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse     standard    3.78e- 1
+## 2 rsq      standard    8.49e- 1
+## 3 rsq_trad standard    8.49e- 1
+## 4 msd      standard    1.62e-18
+## 5 mae      standard    1.24e- 1
+</code></pre><p>Predictions on the test data:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">map_dfr</span>(<span style="color:#a6e22e">c</span>(rmse, rsq, rsq_trad, msd, mae), <span style="color:#f92672">~</span> .(
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tibble</span>(
+</span></span><span style="display:flex;"><span>    truth <span style="color:#f92672">=</span> nutrs_test<span style="color:#f92672">$</span>calories, estimate <span style="color:#f92672">=</span> <span style="color:#a6e22e">predict</span>(lm_model<span style="color:#f92672">$</span>model, nutrs_test)
+</span></span><span style="display:flex;"><span>  ),
+</span></span><span style="display:flex;"><span>  truth, estimate
+</span></span><span style="display:flex;"><span>))
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 5 × 3
+##   .metric  .estimator .estimate
+##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse     standard     0.717  
+## 2 rsq      standard     0.467  
+## 3 rsq_trad standard    -0.142  
+## 4 msd      standard    -0.00258
+## 5 mae      standard     0.338
+</code></pre><h3 id="multiple-models-together">Multiple models together<a hidden class="anchor" aria-hidden="true" href="#multiple-models-together">#</a></h3>
+<p>We first build the general interface function for our loop over models:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>lasso <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">partial</span>(glmnet, alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>ridge <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">partial</span>(glmnet, alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># prefix with dot dot to avoid name collision</span>
+</span></span><span style="display:flex;"><span>regression <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">convoke</span>(
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">list</span>(formula, data),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">lasso</span>(
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#a6e22e">model.matrix</span>(formula, data)[, <span style="color:#ae81ff">-1</span>],
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> data[<span style="color:#a6e22e">[all.vars</span>(formula)[1]]]
+</span></span><span style="display:flex;"><span>  ),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ridge</span>(
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#a6e22e">model.matrix</span>(formula, data)[, <span style="color:#ae81ff">-1</span>],
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> data[<span style="color:#a6e22e">[all.vars</span>(formula)[1]]]
+</span></span><span style="display:flex;"><span>  ),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">earth</span>(formula, data),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plsr</span>(formula, data <span style="color:#f92672">=</span> data)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>regression
+</span></span></code></pre></div><pre tabindex="0"><code>## convoke function
+##   interfaces: lasso(), ridge(), earth(), plsr()
+##   args: formula, data, interface = lasso, interface.args
+</code></pre><p>And also the predict function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>pred_vec <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, newdata, formula, <span style="color:#66d9ef">...</span>) <span style="color:#a6e22e">UseMethod</span>(<span style="color:#e6db74">&#34;pred_vec&#34;</span>)
+</span></span><span style="display:flex;"><span>pred_vec.elnet <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, newdata, formula, <span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">predict</span>(x, newx <span style="color:#f92672">=</span> <span style="color:#a6e22e">model.matrix</span>(formula, newdata)[, <span style="color:#ae81ff">-1</span>], <span style="color:#66d9ef">...</span>)[, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>pred_vec.earth <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, newdata, formula, <span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">predict</span>(x, newdata <span style="color:#f92672">=</span> newdata, <span style="color:#66d9ef">...</span>)[, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>pred_vec.mvr <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, newdata, formula, <span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>  retval <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">predict</span>(x, newdata <span style="color:#f92672">=</span> newdata, <span style="color:#66d9ef">...</span>)
+</span></span><span style="display:flex;"><span>  retval[, , <span style="color:#a6e22e">dim</span>(retval)[[3]]]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pred_vec_regs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">conflate</span>(<span style="color:#a6e22e">pred_vec</span>(x, newdata, formula))
+</span></span><span style="display:flex;"><span>pred_vec_regs
+</span></span></code></pre></div><pre tabindex="0"><code>## conflate function for pred_vec
+##  args: x, newdata, formula, object.args
+</code></pre><p>And the main loop:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>models_preds <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">control</span>(
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    holdout <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">assessment</span>(fold<span style="color:#f92672">$</span>splits)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">regression</span>(protein <span style="color:#f92672">~</span> .,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">analysis</span>(fold<span style="color:#f92672">$</span>splits),
+</span></span><span style="display:flex;"><span>      interface <span style="color:#f92672">=</span> interface, lasso.lambda <span style="color:#f92672">=</span> lambda,
+</span></span><span style="display:flex;"><span>      earth.degree <span style="color:#f92672">=</span> degree, plsr.ncomp <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    holdout<span style="color:#f92672">$</span>.fit <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">pred_vec_regs</span>(model, holdout, protein <span style="color:#f92672">~</span> .)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">list</span>(model <span style="color:#f92672">=</span> model, rmse <span style="color:#f92672">=</span> <span style="color:#a6e22e">rmse</span>(holdout, protein, .fit)[[<span style="color:#e6db74">&#34;.estimate&#34;</span>]])
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  fold <span style="color:#f92672">=</span> <span style="color:#a6e22e">transpose</span>(<span style="color:#a6e22e">vfold_cv</span>(nutrs_train, <span style="color:#ae81ff">5</span>)) <span style="color:#f92672">~</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  interface <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;lasso&#34;</span>, <span style="color:#e6db74">&#34;earth&#34;</span>, <span style="color:#e6db74">&#34;plsr&#34;</span>) <span style="color:#f92672">~</span> <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>  lambda <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>) <span style="color:#f92672">~</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  degree <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">~</span> <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  ncomp <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>) <span style="color:#f92672">~</span> <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>  .refiner <span style="color:#f92672">=</span> <span style="color:#f92672">~</span> <span style="color:#a6e22e">confine</span>(.,
+</span></span><span style="display:flex;"><span>    lambda <span style="color:#f92672">=</span> interface <span style="color:#f92672">%in%</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;lasso&#34;</span>, <span style="color:#e6db74">&#34;ridge&#34;</span>), degree <span style="color:#f92672">=</span> interface <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;earth&#34;</span>,
+</span></span><span style="display:flex;"><span>    ncomp <span style="color:#f92672">=</span> interface <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;plsr&#34;</span>
+</span></span><span style="display:flex;"><span>  ),
+</span></span><span style="display:flex;"><span>  .unnest_value <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>models_preds
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 30 × 7
+##    fold             interface lambda degree ncomp model    rmse
+##    &lt;list&gt;           &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;  &lt;dbl&gt;
+##  1 &lt;named list [2]&gt; lasso        0.1     NA    NA &lt;elnet&gt; 0.870
+##  2 &lt;named list [2]&gt; lasso        0.2     NA    NA &lt;elnet&gt; 0.911
+##  3 &lt;named list [2]&gt; earth       NA        1    NA &lt;earth&gt; 0.351
+##  4 &lt;named list [2]&gt; earth       NA        2    NA &lt;earth&gt; 0.341
+##  5 &lt;named list [2]&gt; plsr        NA       NA     5 &lt;mvr&gt;   0.330
+##  6 &lt;named list [2]&gt; plsr        NA       NA     6 &lt;mvr&gt;   0.330
+##  7 &lt;named list [2]&gt; lasso        0.1     NA    NA &lt;elnet&gt; 1.02 
+##  8 &lt;named list [2]&gt; lasso        0.2     NA    NA &lt;elnet&gt; 1.09 
+##  9 &lt;named list [2]&gt; earth       NA        1    NA &lt;earth&gt; 2.50 
+## 10 &lt;named list [2]&gt; earth       NA        2    NA &lt;earth&gt; 4.84 
+## # … with 20 more rows
+</code></pre><p>Now we can choose the appropriate model by testing the data on the validation
+set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>models_chosen <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">group_by</span>(models_preds, <span style="color:#a6e22e">across</span>(<span style="color:#f92672">-</span><span style="color:#a6e22e">c</span>(fold, model, rmse))) <span style="color:#f92672">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">summarise</span>(model <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(<span style="color:#a6e22e">first</span>(model)), rmse <span style="color:#f92672">=</span> <span style="color:#a6e22e">mean</span>(rmse), .groups <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;drop&#34;</span>)
+</span></span><span style="display:flex;"><span>models_chosen
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 6 × 6
+##   interface lambda degree ncomp model    rmse
+##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;  &lt;dbl&gt;
+## 1 earth       NA        1    NA &lt;earth&gt; 0.827
+## 2 earth       NA        2    NA &lt;earth&gt; 1.60 
+## 3 lasso        0.1     NA    NA &lt;elnet&gt; 0.868
+## 4 lasso        0.2     NA    NA &lt;elnet&gt; 0.895
+## 5 plsr        NA       NA     5 &lt;mvr&gt;   0.394
+## 6 plsr        NA       NA     6 &lt;mvr&gt;   0.394
+</code></pre><p>And the validation set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">mutate</span>(<span style="color:#a6e22e">rowwise</span>(models_chosen), valid_rmse <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    valid_set <span style="color:#f92672">&lt;-</span> nutrs_test
+</span></span><span style="display:flex;"><span>    valid_set<span style="color:#f92672">$</span>.fit <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">pred_vec_regs</span>(model, valid_set, protein <span style="color:#f92672">~</span> .)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rmse</span>(valid_set, protein, .fit)[[<span style="color:#e6db74">&#34;.estimate&#34;</span>]]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 6 × 7
+## # Rowwise: 
+##   interface lambda degree ncomp model    rmse valid_rmse
+##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+## 1 earth       NA        1    NA &lt;earth&gt; 0.827      0.397
+## 2 earth       NA        2    NA &lt;earth&gt; 1.60       0.335
+## 3 lasso        0.1     NA    NA &lt;elnet&gt; 0.868      0.903
+## 4 lasso        0.2     NA    NA &lt;elnet&gt; 0.895      0.944
+## 5 plsr        NA       NA     5 &lt;mvr&gt;   0.394      0.403
+## 6 plsr        NA       NA     6 &lt;mvr&gt;   0.394      0.403
+</code></pre>
+
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://tersetears.github.io/tags/r/">R</a></li>
+      <li><a href="http://tersetears.github.io/tags/tyecon/">tyecon</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Journey Through `tyecon`: Exploring Food.com Tags</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2022 <a href="http://tersetears.github.io/">TerseTears&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

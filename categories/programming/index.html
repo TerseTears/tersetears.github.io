@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.98.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 <link rel="alternate" type="application/rss+xml" href="http://tersetears.github.io/categories/programming/index.xml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
@@ -108,6 +108,18 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>Journey Through `tyecon`: Predictions on Recipe Nutritions</h2>
+  </header>
+  <section class="entry-content">
+    <p>Introduction In this second part of the “journey through tyecon” series, I want to showcase the package’s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &#34;&#34;) knitr::opts_chunk$set(dev = &#39;svg&#39;) theme_set(theme_light()) set.seed(123) recipes &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;) interacts &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food....</p>
+  </section>
+  <footer class="entry-footer">02.07.2022</footer>
+  <a class="entry-link" aria-label="post link to Journey Through `tyecon`: Predictions on Recipe Nutritions" href="http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>Journey Through `tyecon`: Exploring Food.com Tags</h2>
   </header>
   <section class="entry-content">
@@ -123,7 +135,7 @@
   </header>
   <section class="entry-content">
     <p>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
-using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&#34;library(tidyverse)&#34;; Setting up the data using RCall mpg = dataset(&#34;ggplot2&#34;, &#34;mpg&#34;); Vectorized Functions lag, lead julia&gt; R&#34;&#34;&#34; mutate(mpg, leadyear = lead(year)) %&gt;% select(year, leadyear) %&gt;% tail &#34;&#34;&#34; RObject{VecSxp} # A tibble: 6 x 2  year leadyear  &lt;int&gt; &lt;int&gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:...</p>
+using RDatasets, RCall, DataFrames, StatsBase, Statistics R&#34;library(tidyverse)&#34;; Setting up the data using RCall mpg = dataset(&#34;ggplot2&#34;, &#34;mpg&#34;); Vectorized Functions lag, lead julia&gt; R&#34;&#34;&#34; mutate(mpg, leadyear = lead(year)) %&gt;% select(year, leadyear) %&gt;% tail &#34;&#34;&#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &lt;int&gt; &lt;int&gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:...</p>
   </section>
   <footer class="entry-footer">13.11.2021</footer>
   <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 2" href="http://tersetears.github.io/posts/dplyr-dataframes-part2/"></a>
@@ -136,7 +148,7 @@ using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&#34;library(tidyver
   <section class="entry-content">
     <p>Introduction With the release of v1.0 of the DataFrames.jl package, it would seem appropriate to introduce a rather comprehensive cheatsheet of it. One that is of special use to people who come from tidyverse (arguably, the best data transformation syntax there is for combined expressiveness and brevity).
 The order of topics is the same as dplyr cheatsheet.
-using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&#34;library(dplyr)&#34;; Setting up the data using RCall data = dataset(&#34;datasets&#34;, &#34;iris&#34;)  @rput data; Summarize Cases summarize julia&gt; R&#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&#34; RObject{VecSxp}  avSL avSW 1 5....</p>
+using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&#34;library(dplyr)&#34;; Setting up the data using RCall data = dataset(&#34;datasets&#34;, &#34;iris&#34;) @rput data; Summarize Cases summarize julia&gt; R&#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&#34; RObject{VecSxp} avSL avSW 1 5....</p>
   </section>
   <footer class="entry-footer">02.11.2021</footer>
   <a class="entry-link" aria-label="post link to dplyr Cheatsheet to DataFrames.jl Page 1" href="http://tersetears.github.io/posts/dplyr-dataframes/"></a>
@@ -150,8 +162,8 @@ using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&#34;library(
     <p>Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)&#43;x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i=i&#43;1  maximum(abs....</p>
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs....</p>
   </section>
   <footer class="entry-footer">10.07.2021</footer>
   <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part III: Do-While Loops" href="http://tersetears.github.io/posts/while-loops/"></a>
@@ -176,7 +188,7 @@ y = 50 50 Now I define another function that really is supposed to just sum two 
   </header>
   <section class="entry-content">
     <p>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:...</p>
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:...</p>
   </section>
   <footer class="entry-footer">07.07.2021</footer>
   <a class="entry-link" aria-label="post link to Julia Frustrations and Fixes Part I: REPL Errors" href="http://tersetears.github.io/posts/repl-errors/"></a>

@@ -6,7 +6,17 @@
     <description>Recent content on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Journey Through `tyecon`: Predictions on Recipe Nutritions</title>
+      <link>http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</link>
+      <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</guid>
+      <description>Introduction In this second part of the &amp;ldquo;journey through tyecon&amp;rdquo; series, I want to showcase the package&amp;rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &amp;#34;&amp;#34;) knitr::opts_chunk$set(dev = &amp;#39;svg&amp;#39;) theme_set(theme_light()) set.seed(123) recipes &amp;lt;- vroom(&amp;#34;~/Workspace/foodrecipes/RAW_recipes.csv&amp;#34;) interacts &amp;lt;- vroom(&amp;#34;~/Workspace/foodrecipes/RAW_interactions.csv&amp;#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food.</description>
+    </item>
+    
     <item>
       <title>Journey Through `tyecon`: Exploring Food.com Tags</title>
       <link>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</link>
@@ -23,7 +33,7 @@
       
       <guid>http://tersetears.github.io/posts/dplyr-dataframes-part2/</guid>
       <description>Continuing Where We Left This post shows how to translate the second page of the dplyr cheatsheet to DataFrames.jl and Julia commnads.
-using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&amp;#34;library(tidyverse)&amp;#34;; Setting up the data using RCall mpg = dataset(&amp;#34;ggplot2&amp;#34;, &amp;#34;mpg&amp;#34;); Vectorized Functions lag, lead julia&amp;gt; R&amp;#34;&amp;#34;&amp;#34; mutate(mpg, leadyear = lead(year)) %&amp;gt;% select(year, leadyear) %&amp;gt;% tail &amp;#34;&amp;#34;&amp;#34; RObject{VecSxp} # A tibble: 6 x 2  year leadyear  &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:</description>
+using RDatasets, RCall, DataFrames, StatsBase, Statistics R&amp;#34;library(tidyverse)&amp;#34;; Setting up the data using RCall mpg = dataset(&amp;#34;ggplot2&amp;#34;, &amp;#34;mpg&amp;#34;); Vectorized Functions lag, lead julia&amp;gt; R&amp;#34;&amp;#34;&amp;#34; mutate(mpg, leadyear = lead(year)) %&amp;gt;% select(year, leadyear) %&amp;gt;% tail &amp;#34;&amp;#34;&amp;#34; RObject{VecSxp} # A tibble: 6 x 2 year leadyear &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; 1 1999 2008 2 2008 2008 3 2008 1999 4 1999 1999 5 1999 2008 6 2008 NA In Julia:</description>
     </item>
     
     <item>
@@ -34,7 +44,7 @@ using RDatasets, RCall, DataFrames, StatsBase, Statistics  R&amp;#34;library(tid
       <guid>http://tersetears.github.io/posts/dplyr-dataframes/</guid>
       <description>Introduction With the release of v1.0 of the DataFrames.jl package, it would seem appropriate to introduce a rather comprehensive cheatsheet of it. One that is of special use to people who come from tidyverse (arguably, the best data transformation syntax there is for combined expressiveness and brevity).
 The order of topics is the same as dplyr cheatsheet.
-using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&amp;#34;library(dplyr)&amp;#34;; Setting up the data using RCall data = dataset(&amp;#34;datasets&amp;#34;, &amp;#34;iris&amp;#34;)  @rput data; Summarize Cases summarize julia&amp;gt; R&amp;#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&amp;#34; RObject{VecSxp}  avSL avSW 1 5.</description>
+using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors R&amp;#34;library(dplyr)&amp;#34;; Setting up the data using RCall data = dataset(&amp;#34;datasets&amp;#34;, &amp;#34;iris&amp;#34;) @rput data; Summarize Cases summarize julia&amp;gt; R&amp;#34;summarize(data, avSL = mean(SepalLength), avSW = mean(SepalWidth))&amp;#34; RObject{VecSxp} avSL avSW 1 5.</description>
     </item>
     
     <item>
@@ -46,8 +56,8 @@ using RDatasets, RCall, DataFrames, StatsBase, InteractiveErrors  R&amp;#34;libr
       <description>Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)+x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&amp;rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_+x)  i=i+1  maximum(abs.</description>
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&amp;rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_+x) i=i+1 maximum(abs.</description>
     </item>
     
     <item>
@@ -68,7 +78,7 @@ y = 50 50 Now I define another function that really is supposed to just sum two 
       
       <guid>http://tersetears.github.io/posts/repl-errors/</guid>
       <description>Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&amp;rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&amp;gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:</description>
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-&amp;gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:</description>
     </item>
     
     <item>
@@ -77,7 +87,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVar
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://tersetears.github.io/posts/upcoming/</guid>
-      <description>Frustrations and Fixes for Julia Series  Cumbersome globals, bug-inducing as well (Ricatti solver issue) Terrible pipe operator weird choice of having map take function first then data, even though map is a data function itself. This causes issues with the pipe operator idea as well. Column-major vs row-major Need good internet for adding packages (can&amp;rsquo;t use it effectively when outside of town) Poor but understandable reshaping of vectors of vectors into matrices (especially for multidimensional arrays) Unnamed vectors, no annotations possible returning multiple values from map in consistent way.</description>
+      <description>Frustrations and Fixes for Julia Series Cumbersome globals, bug-inducing as well (Ricatti solver issue) Terrible pipe operator weird choice of having map take function first then data, even though map is a data function itself. This causes issues with the pipe operator idea as well. Column-major vs row-major Need good internet for adding packages (can&amp;rsquo;t use it effectively when outside of town) Poor but understandable reshaping of vectors of vectors into matrices (especially for multidimensional arrays) Unnamed vectors, no annotations possible returning multiple values from map in consistent way.</description>
     </item>
     
   </channel>

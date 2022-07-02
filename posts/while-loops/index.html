@@ -10,12 +10,12 @@
 <meta name="description" content="Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)&#43;x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i=i&#43;1  maximum(abs.">
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs.">
 <meta name="author" content="">
 <link rel="canonical" href="http://tersetears.github.io/posts/while-loops/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.2840b7fccd34145847db71a290569594bdbdb00047097f75d6495d162f5d7dff.js" integrity="sha256-KEC3/M00FFhH23GikFaVlL29sABHCX911kldFi9dff8="
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.e85ad0406048e8176e1c7661b25d5c69297ddfe41dc4124cf75ecb99a4f7b3d1.js" integrity="sha256-6FrQQGBI6BduHHZhsl1caSl93&#43;QdxBJM917LmaT3s9E="
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="http://tersetears.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://tersetears.github.io/favicon-16x16.png">
@@ -24,7 +24,7 @@ fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i
 <link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.98.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
@@ -36,8 +36,8 @@ fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i
 <meta property="og:description" content="Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)&#43;x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i=i&#43;1  maximum(abs." />
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://tersetears.github.io/posts/while-loops/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-10T00:00:00&#43;00:00" />
@@ -48,8 +48,8 @@ fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i
 <meta name="twitter:description" content="Simple Iterations The goal is to solve the below expression iteratively for f(x):
 $$ f(x) = β\left(f(x)&#43;x\right) $$
 Of course, we know what the answer is already, for comparison:
-β = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
-fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i=i&#43;1  maximum(abs."/>
+β = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn&rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:
+fcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_&#43;x) i=i&#43;1 maximum(abs."/>
 
 
 <script type="application/ld+json">
@@ -78,11 +78,11 @@ fcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_&#43;x)  i
   "@type": "BlogPosting",
   "headline": "Julia Frustrations and Fixes Part III: Do-While Loops",
   "name": "Julia Frustrations and Fixes Part III: Do-While Loops",
-  "description": "Simple Iterations The goal is to solve the below expression iteratively for f(x):\n$$ f(x) = β\\left(f(x)+x\\right) $$\nOf course, we know what the answer is already, for comparison:\nβ = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn\u0026rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:\nfcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_+x)  i=i+1  maximum(abs.",
+  "description": "Simple Iterations The goal is to solve the below expression iteratively for f(x):\n$$ f(x) = β\\left(f(x)+x\\right) $$\nOf course, we know what the answer is already, for comparison:\nβ = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn\u0026rsquo;t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:\nfcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_+x) i=i+1 maximum(abs.",
   "keywords": [
     "julia"
   ],
-  "articleBody": "Simple Iterations The goal is to solve the below expression iteratively for f(x):\n$$ f(x) = β\\left(f(x)+x\\right) $$\nOf course, we know what the answer is already, for comparison:\nβ = 0.8 f(x) = 1/(1-β)*β*x  x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:\nfcomp, iter = let v_ = zeros(length(x)), i = 0  while true  v = β*(v_+x)  i=i+1  maximum(abs.(v-v_))  1e-6 \u0026\u0026 break  v_ = v  end  (v_,i) end  [f.(x) fcomp] 100×2 Matrix{Float64}: 0.4 0.4 0.8 0.8 1.2 1.2 1.6 1.6 2.0 2.0 2.4 2.4 2.8 2.8 3.2 3.2 3.6 3.6 4.0 4.0 ⋮ 36.8 36.8 37.2 37.2 37.6 37.6 38.0 38.0 38.4 38.4 38.8 38.8 39.2 39.2 39.6 39.6 40.0 40.0 iter 73 Without while loop As a solution, we can adopt a more functional approach to the recursive problem. Below code is more clear on what it’s supposed to do, with the default case mentioned first, and what needs to be done otherwise, later. As for initialization, the function takes care of this task itself in the last line:\nfunction viterate(x, v0)  viterate(v, v_, iter) = maximum(abs.(v-v_))  1e-6 ? (v, iter) :  let v_ = v, v = β*(v_+x)  viterate(v, v_, iter+1)  end  viterate(β*(v0+x), v0, 1) end fcomp2, iter2 = viterate(x, zeros(length(x)))  [f.(x) fcomp2] 100×2 Matrix{Float64}: 0.4 0.4 0.8 0.8 1.2 1.2 1.6 1.6 2.0 2.0 2.4 2.4 2.8 2.8 3.2 3.2 3.6 3.6 4.0 4.0 ⋮ 36.8 36.8 37.2 37.2 37.6 37.6 38.0 38.0 38.4 38.4 38.8 38.8 39.2 39.2 39.6 39.6 40.0 40.0 iter2 73 ",
+  "articleBody": "Simple Iterations The goal is to solve the below expression iteratively for f(x):\n$$ f(x) = β\\left(f(x)+x\\right) $$\nOf course, we know what the answer is already, for comparison:\nβ = 0.8 f(x) = 1/(1-β)*β*x x = 0.1:0.1:10; The original way Using a while loop can be ugly, since there isn’t a do-while syntax in Julia. One needs to specify a true case first and check convergence later:\nfcomp, iter = let v_ = zeros(length(x)), i = 0 while true v = β*(v_+x) i=i+1 maximum(abs.(v-v_)) \u003c 1e-6 \u0026\u0026 break v_ = v end (v_,i) end [f.(x) fcomp] 100×2 Matrix{Float64}: 0.4 0.4 0.8 0.8 1.2 1.2 1.6 1.6 2.0 2.0 2.4 2.4 2.8 2.8 3.2 3.2 3.6 3.6 4.0 4.0 ⋮ 36.8 36.8 37.2 37.2 37.6 37.6 38.0 38.0 38.4 38.4 38.8 38.8 39.2 39.2 39.6 39.6 40.0 40.0 iter 73 Without while loop As a solution, we can adopt a more functional approach to the recursive problem. Below code is more clear on what it’s supposed to do, with the default case mentioned first, and what needs to be done otherwise, later. As for initialization, the function takes care of this task itself in the last line:\nfunction viterate(x, v0) viterate(v, v_, iter) = maximum(abs.(v-v_)) \u003c 1e-6 ? (v, iter) : let v_ = v, v = β*(v_+x) viterate(v, v_, iter+1) end viterate(β*(v0+x), v0, 1) end fcomp2, iter2 = viterate(x, zeros(length(x))) [f.(x) fcomp2] 100×2 Matrix{Float64}: 0.4 0.4 0.8 0.8 1.2 1.2 1.6 1.6 2.0 2.0 2.4 2.4 2.8 2.8 3.2 3.2 3.6 3.6 4.0 4.0 ⋮ 36.8 36.8 37.2 37.2 37.6 37.6 38.0 38.0 38.4 38.4 38.8 38.8 39.2 39.2 39.6 39.6 40.0 40.0 iter2 73 ",
   "wordCount" : "276",
   "inLanguage": "en",
   "datePublished": "2021-07-10T00:00:00Z",

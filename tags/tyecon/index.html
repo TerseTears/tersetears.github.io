@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.98.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 <link rel="alternate" type="application/rss+xml" href="http://tersetears.github.io/tags/tyecon/index.xml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
@@ -105,6 +105,18 @@
 <header class="page-header">
   <h1>tyecon</h1>
 </header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Journey Through `tyecon`: Predictions on Recipe Nutritions</h2>
+  </header>
+  <section class="entry-content">
+    <p>Introduction In this second part of the “journey through tyecon” series, I want to showcase the package’s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
+Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &#34;&#34;) knitr::opts_chunk$set(dev = &#39;svg&#39;) theme_set(theme_light()) set.seed(123) recipes &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_recipes.csv&#34;) interacts &lt;- vroom(&#34;~/Workspace/foodrecipes/RAW_interactions.csv&#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food....</p>
+  </section>
+  <footer class="entry-footer">02.07.2022</footer>
+  <a class="entry-link" aria-label="post link to Journey Through `tyecon`: Predictions on Recipe Nutritions" href="http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/"></a>
+</article>
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">

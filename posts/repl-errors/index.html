@@ -8,11 +8,11 @@
 <title>Julia Frustrations and Fixes Part I: REPL Errors | TerseTears&#39;s Blog</title>
 <meta name="keywords" content="julia" />
 <meta name="description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:">
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:">
 <meta name="author" content="">
 <link rel="canonical" href="http://tersetears.github.io/posts/repl-errors/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.2840b7fccd34145847db71a290569594bdbdb00047097f75d6495d162f5d7dff.js" integrity="sha256-KEC3/M00FFhH23GikFaVlL29sABHCX911kldFi9dff8="
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.e85ad0406048e8176e1c7661b25d5c69297ddfe41dc4124cf75ecb99a4f7b3d1.js" integrity="sha256-6FrQQGBI6BduHHZhsl1caSl93&#43;QdxBJM917LmaT3s9E="
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="http://tersetears.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://tersetears.github.io/favicon-16x16.png">
@@ -21,7 +21,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVar
 <link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.98.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
@@ -31,7 +31,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVar
 
 <meta property="og:title" content="Julia Frustrations and Fixes Part I: REPL Errors" />
 <meta property="og:description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:" />
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://tersetears.github.io/posts/repl-errors/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-07T00:00:00&#43;00:00" />
@@ -40,7 +40,7 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVar
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Julia Frustrations and Fixes Part I: REPL Errors"/>
 <meta name="twitter:description" content="Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn&rsquo;t working. Consider this example:
-Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:"/>
+Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-&gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:"/>
 
 
 <script type="application/ld+json">
@@ -69,11 +69,11 @@ Error output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVar
   "@type": "BlogPosting",
   "headline": "Julia Frustrations and Fixes Part I: REPL Errors",
   "name": "Julia Frustrations and Fixes Part I: REPL Errors",
-  "description": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn\u0026rsquo;t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-\u0026gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:",
+  "description": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn\u0026rsquo;t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-\u0026gt;x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:",
   "keywords": [
     "julia"
   ],
-  "articleBody": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined  map(x-x, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:\nusing InteractiveErrors  y = y^x # REPL halts at above, waiting for user input ERROR: UndefVarError: x not defined  # ... # once input is received, it continues z = y; ",
+  "articleBody": "Main issue An issue with the REPL workflow is that When sending a script (or any chunks) to the REPL, lines that produce error simply output that error and the REPL simply continues to execute the following lines. This can be quite problematic since we may not know why something isn’t working. Consider this example:\nError output y = 5 y = y^x # ERROR: UndefVarError: x not defined ERROR: UndefVarError: x not defined map(x-\u003ex, 1:100) 100-element Vector{Int64}: 1 2 3 4 5 6 7 8 9 10 ⋮ 92 93 94 95 96 97 98 99 100 z = y 5 Interactive errors The way to solve this issue is to use the InteractiveErrors package, which halts the REPL until further action is taken:\nusing InteractiveErrors y = y^x # REPL halts at above, waiting for user input ERROR: UndefVarError: x not defined # ... # once input is received, it continues z = y; ",
   "wordCount" : "156",
   "inLanguage": "en",
   "datePublished": "2021-07-07T00:00:00Z",
