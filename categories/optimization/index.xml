@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>optimization on TerseTears&#39;s Blog</title>
+    <link>http://tersetears.github.io/categories/optimization/</link>
+    <description>Recent content in optimization on TerseTears&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/optimization/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Short Comparison of Julia Optimization Frameworks</title>
+      <link>http://tersetears.github.io/posts/julia-opt-benchmarks/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/posts/julia-opt-benchmarks/</guid>
+      <description>Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.
+using JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 + 2x2 - 7)^2 + (2x1 + x2 -5)^2 booth_vector(x) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2 booth_parameters(x, p) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2; JuMP.</description>
+    </item>
+    
+  </channel>
+</rss>

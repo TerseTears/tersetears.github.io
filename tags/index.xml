@@ -6,7 +6,34 @@
     <description>Recent content in Tags on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>julia</title>
+      <link>http://tersetears.github.io/tags/julia/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/tags/julia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JuMP</title>
+      <link>http://tersetears.github.io/tags/jump/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/tags/jump/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Optimization</title>
+      <link>http://tersetears.github.io/tags/optimization/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>R</title>
       <link>http://tersetears.github.io/tags/r/</link>
@@ -22,15 +49,6 @@
       <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>http://tersetears.github.io/tags/tyecon/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>julia</title>
-      <link>http://tersetears.github.io/tags/julia/</link>
-      <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/julia/</guid>
       <description></description>
     </item>
     

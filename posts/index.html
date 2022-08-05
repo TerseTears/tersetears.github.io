@@ -123,6 +123,18 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Short Comparison of Julia Optimization Frameworks</h2>
+  </header>
+  <section class="entry-content">
+    <p>Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.
+using JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 &#43; 2x2 - 7)^2 &#43; (2x1 &#43; x2 -5)^2 booth_vector(x) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2 booth_parameters(x, p) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2; JuMP....</p>
+  </section>
+  <footer class="entry-footer">05.08.2022</footer>
+  <a class="entry-link" aria-label="post link to Short Comparison of Julia Optimization Frameworks" href="http://tersetears.github.io/posts/julia-opt-benchmarks/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Journey Through `tyecon`: Predictions on Recipe Nutritions</h2>
   </header>
   <section class="entry-content">

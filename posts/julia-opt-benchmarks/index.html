@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Short Comparison of Julia Optimization Frameworks | TerseTears&#39;s Blog</title>
+<meta name="keywords" content="julia, JuMP, Optimization" />
+<meta name="description" content="Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.
+using JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 &#43; 2x2 - 7)^2 &#43; (2x1 &#43; x2 -5)^2 booth_vector(x) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2 booth_parameters(x, p) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2; JuMP.">
+<meta name="author" content="">
+<link rel="canonical" href="http://tersetears.github.io/posts/julia-opt-benchmarks/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.35cd0f65a15cafa92372b8313deef5960aae04b90ad722f2bbf509eb0468137e.css" integrity="sha256-Nc0PZaFcr6kjcrgxPe71lgquBLkK1yLyu/UJ6wRoE34=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.e85ad0406048e8176e1c7661b25d5c69297ddfe41dc4124cf75ecb99a4f7b3d1.js" integrity="sha256-6FrQQGBI6BduHHZhsl1caSl93&#43;QdxBJM917LmaT3s9E="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="http://tersetears.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://tersetears.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://tersetears.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://tersetears.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="http://tersetears.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.101.0" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
+<meta property="og:title" content="Short Comparison of Julia Optimization Frameworks" />
+<meta property="og:description" content="Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.
+using JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 &#43; 2x2 - 7)^2 &#43; (2x1 &#43; x2 -5)^2 booth_vector(x) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2 booth_parameters(x, p) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2; JuMP." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://tersetears.github.io/posts/julia-opt-benchmarks/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-05T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-08-05T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Short Comparison of Julia Optimization Frameworks"/>
+<meta name="twitter:description" content="Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.
+using JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 &#43; 2x2 - 7)^2 &#43; (2x1 &#43; x2 -5)^2 booth_vector(x) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2 booth_parameters(x, p) = (x[1] &#43; 2x[2] - 7)^2 &#43; (2x[1] &#43; x[2] -5)^2; JuMP."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://tersetears.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Short Comparison of Julia Optimization Frameworks",
+      "item": "http://tersetears.github.io/posts/julia-opt-benchmarks/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Short Comparison of Julia Optimization Frameworks",
+  "name": "Short Comparison of Julia Optimization Frameworks",
+  "description": "Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.\nusing JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 + 2x2 - 7)^2 + (2x1 + x2 -5)^2 booth_vector(x) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2 booth_parameters(x, p) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2; JuMP.",
+  "keywords": [
+    "julia", "JuMP", "Optimization"
+  ],
+  "articleBody": "Introduction This is a short comparison of the mathematical optimization facilities of the Julia language, where I compare JuMP.jl, Optim.jl, and Optimization.jl libraries.\nusing JuMP using Optim using Optimization using OptimizationOptimJL using OptimizationNLopt using BenchmarkTools import Ipopt import NLopt # Booth function. The three frameworks require different specifications. booth(x1, x2) = (x1 + 2x2 - 7)^2 + (2x1 + x2 -5)^2 booth_vector(x) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2 booth_parameters(x, p) = (x[1] + 2x[2] - 7)^2 + (2x[1] + x[2] -5)^2; JuMP.jl Implementation model = Model() set_silent(model) @variable(model, x[1:2]) register(model, :booth, 2, booth; autodiff = true) @NLobjective(model, Min, booth(x[1], x[2])) Ipopt.jl set_optimizer(model, Ipopt.Optimizer) @benchmark JuMP.optimize!($model) BenchmarkTools.Trial: 592 samples with 1 evaluation. Range (min … max): 7.671 ms … 14.631 ms ┊ GC (min … max): 0.00% … 0.00% Time (median): 7.947 ms ┊ GC (median): 0.00% Time (mean ± σ): 8.431 ms ± 1.074 ms ┊ GC (mean ± σ): 0.00% ± 0.00% ▃█▇▅▂▃▃▂▂ ▁▁ ▂ ██████████████▅██▆▆▁▆▅▆▆▅▆▆▅▆▇▅▆▁▆▄▅▄▅▄▆▆▄▄▄▅▁▅▄▁▅▁▁▄▁▁▄▁▄ ▇ 7.67 ms Histogram: log(frequency) by time 12.9 ms \u003c Memory estimate: 20.06 KiB, allocs estimate: 442. Ipopt really is not a good substitute for the native Julia implementation of Optim.jl. Nevertheless, the same algorithms implemented by Optim.jl can be found in the NLopt.jl package as bindings to implementations in other languages.\nNLopt.jl set_optimizer(model, NLopt.Optimizer) set_optimizer_attribute(model, \"algorithm\", :LD_LBFGS) @benchmark JuMP.optimize!($model) BenchmarkTools.Trial: 9546 samples with 1 evaluation. Range (min … max): 463.448 μs … 17.432 ms ┊ GC (min … max): 0.00% … 77. 15% Time (median): 480.015 μs ┊ GC (median): 0.00% Time (mean ± σ): 510.563 μs ± 190.779 μs ┊ GC (mean ± σ): 0.28% ± 0. 79% ▅█▆▅▄▅▄▃▃▂▁▁ ▁▁▁▁▁▁ ▁ ██████████████████████▇▇▅▆▆▅▇▄▆▆▆▆▆▅▇▆▅▆▆▆▆▆▇▆▆▆▇▇▆▅▆▆▄▄▆▄▅▄▅ █ 463 μs Histogram: log(frequency) by time 862 μs \u003c Memory estimate: 12.28 KiB, allocs estimate: 244. Optim.jl @benchmark Optim.optimize($booth_vector, [0., 0.], LBFGS(); autodiff = :forward) BenchmarkTools.Trial: 10000 samples with 4 evaluations. Range (min … max): 7.130 μs … 2.177 ms ┊ GC (min … max): 0.00% … 99.13% Time (median): 7.604 μs ┊ GC (median): 0.00% Time (mean ± σ): 8.887 μs ± 42.817 μs ┊ GC (mean ± σ): 9.58% ± 1.98% ▃▆███▇▆▅▄▄▃▃▂▂▁▁▁▁▁ ▁▁ ▁▁▁▁▁▂▂▁▂▁▂▁▁▁ ▂ ▅████████████████████▇███████████████████████▆▇▆▆▅▄▅▄▅▅▅▂▅ █ 7.13 μs Histogram: log(frequency) by time 12.1 μs \u003c Memory estimate: 8.53 KiB, allocs estimate: 132. There is an interesting pull request to implement an Optim.jl interface for JuMP here. It would be interesting to compare the benchmarks once Optim becomes accessible from JuMP. For now, the almost 100 times slower speed may be attributed to either slower implementation in NLopt or the huge overhead of JuMP modeling. Alternatively, we can use another wrapper over optimization libraries, the Optimization.jl library.\nOptimization.jl optf = OptimizationFunction(booth_parameters, Optimization.AutoForwardDiff()) prob = OptimizationProblem(optf, [0., 0.]) @benchmark solve($prob, LBFGS()) BenchmarkTools.Trial: 10000 samples with 1 evaluation. Range (min … max): 16.511 μs … 8.585 ms ┊ GC (min … max): 0.00% … 99.2 1% Time (median): 17.989 μs ┊ GC (median): 0.00% Time (mean ± σ): 21.041 μs ± 120.161 μs ┊ GC (mean ± σ): 8.04% ± 1.4 1% ▇█▂ ▃▇███▆▄▃▄▅▅▄▃▄▄▄▃▃▃▃▃▃▂▂▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▁▂▂▂▂▁▂ ▃ 16.5 μs Histogram: frequency by time 35.7 μs \u003c Memory estimate: 14.94 KiB, allocs estimate: 211. There is clearly an overhead to using Optimization.jl making it more than two times slower than using Optim.jl natively.\nNLopt @benchmark solve($prob, NLopt.LD_LBFGS()) BenchmarkTools.Trial: 10000 samples with 1 evaluation. Range (min … max): 413.016 μs … 1.420 ms ┊ GC (min … max): 0.00% … 0.00 % Time (median): 431.895 μs ┊ GC (median): 0.00% Time (mean ± σ): 451.550 μs ± 48.815 μs ┊ GC (mean ± σ): 0.00% ± 0.00 % ▄█ ▁██▃▇▆▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ▂ 413 μs Histogram: frequency by time 633 μs \u003c Memory estimate: 3.58 KiB, allocs estimate: 64. Comparing the result with JuMP, one can conclude that the overheads in JuMP and Optimization.jl seem to be on the same level. The poorer benchmark results can therefore be attributed to NLopt.jl or the packages it wraps.\nAnother great thing about Optimization.jl is that it interfaces with the ModelingToolkit.jl package pretty well as well.\nWhich Framework to Choose It is true that the Optim.jl may not really be a framework per se. Nevertheless, its raw speed makes it a great choice for embedding it in analyses where optimization may be the bottleneck. Such as calling an optimization routine in a long loop or matching and estimation.\nOn the other hand, a framework such as Optimization.jl, despite the added overhead, provides great convenience especially in situations where the function to be optimized is subject to rapid changes (such as testing modeling approaches), allowing one to quickly switch between different optimization methods with easy syntax.\nPersonally, I think JuMP is best for a single optimization problem, perhaps large-scaled, with many underlying considerations, such as done in the PowerModels.jl package. It is just not as easy to prototype a model using JuMP because of the sort of global approach it takes to modeling (a single model that is to be modified using macros). I see the Optimization.jl package as the framework with the greatest flexibility whose syntax does not deviate greatly from Julia Base, despite remaining highly extensible.\n",
+  "wordCount" : "845",
+  "inLanguage": "en",
+  "datePublished": "2022-08-05T00:00:00Z",
+  "dateModified": "2022-08-05T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://tersetears.github.io/posts/julia-opt-benchmarks/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TerseTears's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://tersetears.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://tersetears.github.io/" accesskey="h" title="TerseTears&#39;s Blog (Alt + H)">TerseTears&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://tersetears.github.io/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://tersetears.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://tersetears.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Short Comparison of Julia Optimization Frameworks
+    </h1>
+    <div class="post-meta">05.08.2022
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <div class="details">Table of Contents</div>
+        </summary>
+        <div class="inner"><ul>
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a></li>
+                <li>
+                    <a href="#jumpjl-implementation" aria-label="JuMP.jl Implementation">JuMP.jl Implementation</a><ul>
+                        
+                <li>
+                    <a href="#ipoptjl" aria-label="Ipopt.jl">Ipopt.jl</a></li>
+                <li>
+                    <a href="#nloptjl" aria-label="NLopt.jl">NLopt.jl</a></li></ul>
+                </li>
+                <li>
+                    <a href="#optimjl" aria-label="Optim.jl">Optim.jl</a></li>
+                <li>
+                    <a href="#optimizationjl" aria-label="Optimization.jl">Optimization.jl</a><ul>
+                        
+                <li>
+                    <a href="#nlopt" aria-label="NLopt">NLopt</a></li></ul>
+                </li>
+                <li>
+                    <a href="#which-framework-to-choose" aria-label="Which Framework to Choose">Which Framework to Choose</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h1>
+<p>This is a short comparison of the mathematical optimization facilities of
+the Julia language, where I compare
+<a href="https://github.com/jump-dev/JuMP.jl">JuMP.jl</a>,
+<a href="https://github.com/JuliaNLSolvers/Optim.jl">Optim.jl</a>, and
+<a href="https://github.com/SciML/Optimization.jl">Optimization.jl</a> libraries.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> JuMP
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Optim
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Optimization
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> OptimizationOptimJL
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> OptimizationNLopt
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> BenchmarkTools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> Ipopt
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> NLopt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Booth function. The three frameworks require different specifications.</span>
+</span></span><span style="display:flex;"><span>booth(x1, x2)  <span style="color:#f92672">=</span> (x1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>x2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">7</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span>x1 <span style="color:#f92672">+</span> x2 <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> 
+</span></span><span style="display:flex;"><span>booth_vector(x)  <span style="color:#f92672">=</span> (x[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">7</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span>x[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> 
+</span></span><span style="display:flex;"><span>booth_parameters(x, p)  <span style="color:#f92672">=</span> (x[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">7</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span>x[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><h1 id="jumpjl-implementation">JuMP.jl Implementation<a hidden class="anchor" aria-hidden="true" href="#jumpjl-implementation">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Model()
+</span></span><span style="display:flex;"><span>set_silent(model)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@variable</span>(model, x[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>register(model, <span style="color:#e6db74">:booth</span>, <span style="color:#ae81ff">2</span>, booth; autodiff <span style="color:#f92672">=</span> true)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@NLobjective</span>(model, Min, booth(x[<span style="color:#ae81ff">1</span>], x[<span style="color:#ae81ff">2</span>]))
+</span></span></code></pre></div><h2 id="ipoptjl">Ipopt.jl<a hidden class="anchor" aria-hidden="true" href="#ipoptjl">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>set_optimizer(model, Ipopt<span style="color:#f92672">.</span>Optimizer)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@benchmark</span> JuMP<span style="color:#f92672">.</span>optimize!(<span style="color:#f92672">$</span>model)
+</span></span></code></pre></div><pre tabindex="0"><code>BenchmarkTools.Trial: 592 samples with 1 evaluation.
+ Range (min … max):  7.671 ms … 14.631 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     7.947 ms              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   8.431 ms ±  1.074 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▃█▇▅▂▃▃▂▂  ▁▁  ▂                                            
+  ██████████████▅██▆▆▁▆▅▆▆▅▆▆▅▆▇▅▆▁▆▄▅▄▅▄▆▆▄▄▄▅▁▅▄▁▅▁▁▄▁▁▄▁▄ ▇
+  7.67 ms      Histogram: log(frequency) by time     12.9 ms &lt;
+
+ Memory estimate: 20.06 KiB, allocs estimate: 442.
+</code></pre><p>Ipopt really is not a good substitute for the native Julia implementation of
+Optim.jl. Nevertheless, the same algorithms implemented by Optim.jl can be
+found in the NLopt.jl package as bindings to implementations in other
+languages.</p>
+<h2 id="nloptjl">NLopt.jl<a hidden class="anchor" aria-hidden="true" href="#nloptjl">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>set_optimizer(model, NLopt<span style="color:#f92672">.</span>Optimizer)
+</span></span><span style="display:flex;"><span>set_optimizer_attribute(model, <span style="color:#e6db74">&#34;algorithm&#34;</span>, <span style="color:#e6db74">:LD_LBFGS</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@benchmark</span> JuMP<span style="color:#f92672">.</span>optimize!(<span style="color:#f92672">$</span>model)
+</span></span></code></pre></div><pre tabindex="0"><code>BenchmarkTools.Trial: 9546 samples with 1 evaluation.
+ Range (min … max):  463.448 μs …  17.432 ms  ┊ GC (min … max): 0.00% … 77.
+15%
+ Time  (median):     480.015 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   510.563 μs ± 190.779 μs  ┊ GC (mean ± σ):  0.28% ±  0.
+79%
+
+  ▅█▆▅▄▅▄▃▃▂▁▁   ▁▁▁▁▁▁                                         ▁
+  ██████████████████████▇▇▅▆▆▅▇▄▆▆▆▆▆▅▇▆▅▆▆▆▆▆▇▆▆▆▇▇▆▅▆▆▄▄▆▄▅▄▅ █
+  463 μs        Histogram: log(frequency) by time        862 μs &lt;
+
+ Memory estimate: 12.28 KiB, allocs estimate: 244.
+</code></pre><h1 id="optimjl">Optim.jl<a hidden class="anchor" aria-hidden="true" href="#optimjl">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#a6e22e">@benchmark</span> Optim<span style="color:#f92672">.</span>optimize(<span style="color:#f92672">$</span>booth_vector, [<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>], LBFGS(); autodiff <span style="color:#f92672">=</span> <span style="color:#e6db74">:forward</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>BenchmarkTools.Trial: 10000 samples with 4 evaluations.
+ Range (min … max):  7.130 μs …  2.177 ms  ┊ GC (min … max): 0.00% … 99.13%
+ Time  (median):     7.604 μs              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   8.887 μs ± 42.817 μs  ┊ GC (mean ± σ):  9.58% ±  1.98%
+
+   ▃▆███▇▆▅▄▄▃▃▂▂▁▁▁▁▁    ▁▁  ▁▁▁▁▁▂▂▁▂▁▂▁▁▁                 ▂
+  ▅████████████████████▇███████████████████████▆▇▆▆▅▄▅▄▅▅▅▂▅ █
+  7.13 μs      Histogram: log(frequency) by time     12.1 μs &lt;
+
+ Memory estimate: 8.53 KiB, allocs estimate: 132.
+</code></pre><p>There is an interesting pull request to implement an Optim.jl interface for
+JuMP <a href="https://github.com/JuliaNLSolvers/Optim.jl/pull/929">here</a>. It would
+be interesting to compare the benchmarks once Optim becomes accessible from
+JuMP. For now, the almost 100 times slower speed may be attributed to either
+slower implementation in NLopt or the huge overhead of JuMP modeling.
+Alternatively, we can use another wrapper over optimization libraries, the
+Optimization.jl library.</p>
+<h1 id="optimizationjl">Optimization.jl<a hidden class="anchor" aria-hidden="true" href="#optimizationjl">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>optf <span style="color:#f92672">=</span> OptimizationFunction(booth_parameters, Optimization<span style="color:#f92672">.</span>AutoForwardDiff())
+</span></span><span style="display:flex;"><span>prob <span style="color:#f92672">=</span> OptimizationProblem(optf, [<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>])
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@benchmark</span> solve(<span style="color:#f92672">$</span>prob, LBFGS())
+</span></span></code></pre></div><pre tabindex="0"><code>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):  16.511 μs …   8.585 ms  ┊ GC (min … max): 0.00% … 99.2
+1%
+ Time  (median):     17.989 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   21.041 μs ± 120.161 μs  ┊ GC (mean ± σ):  8.04% ±  1.4
+1%
+
+    ▇█▂                                                         
+  ▃▇███▆▄▃▄▅▅▄▃▄▄▄▃▃▃▃▃▃▂▂▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▁▂▂▂▂▁▂ ▃
+  16.5 μs         Histogram: frequency by time         35.7 μs &lt;
+
+ Memory estimate: 14.94 KiB, allocs estimate: 211.
+</code></pre><p>There is clearly an overhead to using Optimization.jl making it more than
+two times slower than using Optim.jl natively.</p>
+<h2 id="nlopt">NLopt<a hidden class="anchor" aria-hidden="true" href="#nlopt">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#a6e22e">@benchmark</span> solve(<span style="color:#f92672">$</span>prob, NLopt<span style="color:#f92672">.</span>LD_LBFGS())
+</span></span></code></pre></div><pre tabindex="0"><code>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):  413.016 μs …  1.420 ms  ┊ GC (min … max): 0.00% … 0.00
+%
+ Time  (median):     431.895 μs              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   451.550 μs ± 48.815 μs  ┊ GC (mean ± σ):  0.00% ± 0.00
+%
+
+   ▄█                                                           
+  ▁██▃▇▆▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ▂
+  413 μs          Histogram: frequency by time          633 μs &lt;
+
+ Memory estimate: 3.58 KiB, allocs estimate: 64.
+</code></pre><p>Comparing the result with JuMP, one can conclude that the overheads in JuMP
+and Optimization.jl seem to be on the same level. The poorer benchmark
+results can therefore be attributed to NLopt.jl or the packages it wraps.</p>
+<p>Another great thing about Optimization.jl is that it interfaces with the
+<a href="https://github.com/SciML/ModelingToolkit.jl">ModelingToolkit.jl</a>
+package pretty well as well.</p>
+<h1 id="which-framework-to-choose">Which Framework to Choose<a hidden class="anchor" aria-hidden="true" href="#which-framework-to-choose">#</a></h1>
+<p>It is true that the Optim.jl may not really be a framework per se.
+Nevertheless, its raw speed makes it a great choice for embedding it in
+analyses where optimization may be the bottleneck. Such as calling an
+optimization routine in a long loop or matching and estimation.</p>
+<p>On the other hand, a framework such as Optimization.jl, despite the added
+overhead, provides great convenience especially in situations where the
+function to be optimized is subject to rapid changes (such as testing
+modeling approaches), allowing one to quickly switch between different
+optimization methods with easy syntax.</p>
+<p>Personally, I think JuMP is best for a single optimization problem, perhaps
+large-scaled, with many underlying considerations, such as done in the
+<a href="https://github.com/lanl-ansi/PowerModels.jl">PowerModels.jl</a>
+package. It is just not as easy to prototype a model using
+JuMP because of the sort of global approach it takes to modeling (a
+single model that is to be modified using macros). I see the
+Optimization.jl package as the framework with the greatest flexibility
+whose syntax does not deviate greatly from Julia Base, despite remaining
+highly extensible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"></code></pre></div>
+
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://tersetears.github.io/tags/julia/">julia</a></li>
+      <li><a href="http://tersetears.github.io/tags/jump/">JuMP</a></li>
+      <li><a href="http://tersetears.github.io/tags/optimization/">Optimization</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Journey Through `tyecon`: Predictions on Recipe Nutritions</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2022 <a href="http://tersetears.github.io/">TerseTears&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

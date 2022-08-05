@@ -6,22 +6,31 @@
     <description>Recent content in Categories on TerseTears&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>data science</title>
-      <link>http://tersetears.github.io/categories/data-science/</link>
-      <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      <title>optimization</title>
+      <link>http://tersetears.github.io/categories/optimization/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://tersetears.github.io/categories/data-science/</guid>
+      <guid>http://tersetears.github.io/categories/optimization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>programming</title>
       <link>http://tersetears.github.io/categories/programming/</link>
-      <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>http://tersetears.github.io/categories/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data science</title>
+      <link>http://tersetears.github.io/categories/data-science/</link>
+      <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://tersetears.github.io/categories/data-science/</guid>
       <description></description>
     </item>
     
