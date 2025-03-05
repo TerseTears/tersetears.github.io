@@ -1,56 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on TerseTears&#39;s Blog</title>
-    <link>http://tersetears.github.io/tags/</link>
-    <description>Recent content in Tags on TerseTears&#39;s Blog</description>
+    <title>Tags on Mohamad Ali Mohamadi</title>
+    <link>https://tersetears.github.io/tags/</link>
+    <description>Recent content in Tags on Mohamad Ali Mohamadi</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://tersetears.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>julia</title>
-      <link>http://tersetears.github.io/tags/julia/</link>
+      <link>https://tersetears.github.io/tags/julia/</link>
       <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/julia/</guid>
+      <guid>https://tersetears.github.io/tags/julia/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>JuMP</title>
-      <link>http://tersetears.github.io/tags/jump/</link>
+      <link>https://tersetears.github.io/tags/jump/</link>
       <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/jump/</guid>
+      <guid>https://tersetears.github.io/tags/jump/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Optimization</title>
-      <link>http://tersetears.github.io/tags/optimization/</link>
+      <link>https://tersetears.github.io/tags/optimization/</link>
       <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/optimization/</guid>
+      <guid>https://tersetears.github.io/tags/optimization/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>R</title>
-      <link>http://tersetears.github.io/tags/r/</link>
+      <link>https://tersetears.github.io/tags/r/</link>
       <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/r/</guid>
+      <guid>https://tersetears.github.io/tags/r/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>tyecon</title>
-      <link>http://tersetears.github.io/tags/tyecon/</link>
+      <link>https://tersetears.github.io/tags/tyecon/</link>
       <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/tags/tyecon/</guid>
+      <guid>https://tersetears.github.io/tags/tyecon/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

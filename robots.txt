@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tersetears.github.io/sitemap.xml

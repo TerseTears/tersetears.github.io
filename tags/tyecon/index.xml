@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tyecon on TerseTears&#39;s Blog</title>
-    <link>http://tersetears.github.io/tags/tyecon/</link>
-    <description>Recent content in tyecon on TerseTears&#39;s Blog</description>
+    <title>tyecon on Mohamad Ali Mohamadi</title>
+    <link>https://tersetears.github.io/tags/tyecon/</link>
+    <description>Recent content in tyecon on Mohamad Ali Mohamadi</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 02 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://tersetears.github.io/tags/tyecon/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Sat, 02 Jul 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://tersetears.github.io/tags/tyecon/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Journey Through `tyecon`: Predictions on Recipe Nutritions</title>
-      <link>http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</link>
+      <link>https://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</link>
       <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</guid>
-      <description>Introduction In this second part of the &amp;ldquo;journey through tyecon&amp;rdquo; series, I want to showcase the package&amp;rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis. I will be using the Food.com dataset as before.
-Setup and Data Import library(tidyverse) library(tidyselect) library(magrittr) library(vroom) library(tyecon) library(rsample) library(yardstick) library(glmnet) library(earth) library(pls) knitr::opts_chunk$set(fig.path = &amp;#34;&amp;#34;) knitr::opts_chunk$set(dev = &amp;#39;svg&amp;#39;) theme_set(theme_light()) set.seed(123) recipes &amp;lt;- vroom(&amp;#34;~/Workspace/foodrecipes/RAW_recipes.csv&amp;#34;) interacts &amp;lt;- vroom(&amp;#34;~/Workspace/foodrecipes/RAW_interactions.csv&amp;#34;) Nutrition values, except for calories, are all percent of daily value, a daily quota filled by the amount of the percentage by the consumption of the specific food.</description>
+      <guid>https://tersetears.github.io/posts/journey-through-tyecon/predict-nutrs/</guid>
+      <description>Introduction #In this second part of the &amp;ldquo;journey through tyecon&amp;rdquo; series, I want to showcase the package&amp;rsquo;s facilities in simplifying tasks common to the predictive modelling part of data analysis.</description>
     </item>
-    
     <item>
       <title>Journey Through `tyecon`: Exploring Food.com Tags</title>
-      <link>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</link>
+      <link>https://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</link>
       <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</guid>
-      <description>Introduction I&amp;rsquo;ve been working on my R package, tyecon for some time now. I think it can be a useful tool in performing day to day data analysis tasks. The idea is very simple: More higher order macros. There&amp;rsquo;s no reason to focus on the handful of existing ones, like the magrittr pipes or the dplyr syntax. We have a language here that supports lazy evaluation and first class functions. This is all we need to make programming life easier.</description>
+      <guid>https://tersetears.github.io/posts/journey-through-tyecon/explore-tags/</guid>
+      <description>Introduction #I&amp;rsquo;ve been working on my R package, tyecon for some time now.</description>
     </item>
-    
   </channel>
 </rss>
